@@ -59,9 +59,9 @@ INSTALLED_APPS = [
     "drf_social_oauth2",
     "drf_yasg",
     # my apps
-    "login",
-    "userprofile",
-    "user_management",
+    "login.apps.LoginConfig",
+    "userprofile.apps.UserprofileConfig",
+    "user_management.apps.UserManagementConfig",
 ]
 
 MIDDLEWARE = [
