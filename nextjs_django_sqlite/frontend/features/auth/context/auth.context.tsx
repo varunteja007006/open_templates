@@ -20,7 +20,6 @@ import {
   socialLoginPayloadType,
 } from "../types/auth.types";
 import { LOGIN_ROUTES, UNPROTECTED_ROUTES } from "@/constants/routes.constant";
-import { Sign } from "crypto";
 
 type UserState = User;
 
@@ -177,7 +176,6 @@ export function AuthContextProvider({
         ...prev,
         ...validateToken.data,
       }));
-      router.push("/");
     }
   }, [validateToken.data, validateToken.isError, validateToken.isLoading]);
 
