@@ -1,13 +1,16 @@
+
+# python cache
 __pycache__
+.pyc
 
-migrations
-
+# environment variables
 .env
 .env/*
 
+# database
 db.sqlite3
 
-
+# custom
 Notes.txt
 Note.txt
 Rough.txt
@@ -15,8 +18,9 @@ rough.txt
 notes.txt
 note.txt
 
-
+# vscode settings
 vscode
-
 .vscode
+
+# git
 .git
