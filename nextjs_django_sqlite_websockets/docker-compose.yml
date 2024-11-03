@@ -1,0 +1,33 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app # Maps code for live updates
+    env_file:
+      - ./backend/.env
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app # Maps code for live updates
+      - /app/node_modules # Maps code for live updates
+      - /app/.next # Maps code for live updates
+    env_file:
+      - ./frontend/.env
+    networks:
+      - app-network
+
+networks:
+  app-network:
