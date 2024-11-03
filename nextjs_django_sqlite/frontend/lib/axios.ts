@@ -6,6 +6,7 @@ import {
 } from "@/features/auth/api/login.api";
 
 import _ from "lodash";
+import { ToastErrorObj } from "@/types/api.types";
 
 axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_BACKEND_API}`;
 axios.defaults.timeout = 1000;
@@ -45,11 +46,11 @@ axios.interceptors.response.use(
       };
 
       let res = await refresh();
-      if (!res || !res.success) {
+      if (!res?.success) {
         res = await refresh2();
       }
 
-      if (res && res.success) {
+      if (res?.success) {
         onSuccess();
       }
     };
@@ -61,7 +62,11 @@ axios.interceptors.response.use(
     const data = error.response?.data ?? {};
     const dataArr = Object.values(data);
     const errorMessage = _.join(dataArr, ", ");
-    error.response.data = errorMessage;
+    error.response.data = {
+      title: `${error.response?.statusText ?? ""}`,
+      description: errorMessage || `Oops something went wrong!`,
+      variant: "error",
+    } as ToastErrorObj;
 
     return Promise.reject(error);
   }

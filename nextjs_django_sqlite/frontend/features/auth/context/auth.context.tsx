@@ -12,7 +12,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { User } from "@/types/user.types";
-import { getErrors } from "@/utils/api.utils";
 import { validateTokenQuery } from "../api/login.query";
 import {
   LoginFormSchemaType,
@@ -20,6 +19,7 @@ import {
   socialLoginPayloadType,
 } from "../types/auth.types";
 import { LOGIN_ROUTES, UNPROTECTED_ROUTES } from "@/constants/routes.constant";
+import { ToastErrorObj } from "@/types/api.types";
 
 type UserState = User;
 
@@ -96,7 +96,7 @@ export function AuthContextProvider({
   }
 
   function onError(error: AxiosError) {
-    toast(getErrors(error));
+    toast(error.response?.data as ToastErrorObj);
   }
 
   function onLogoutSuccess(response: { success: boolean }) {
@@ -164,7 +164,10 @@ export function AuthContextProvider({
   >({
     mutationFn: socialTokenLogin,
     onSuccess,
-    onError,
+    onError: (error) => {
+      onError(error);
+      router.push("/login");
+    },
   });
 
   React.useEffect(() => {

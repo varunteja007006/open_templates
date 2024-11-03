@@ -35,6 +35,18 @@ class CustomConvertTokenView(ConvertTokenView):
 
             tokens = response.data
 
+            user_email = tokens["user"]["email"]
+            user = User.objects.get(email=user_email)
+
+            if user is None:
+                return Response(
+                    {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
+                )
+
+            user.email = user_email.lower()  # convert the email to lowercase
+            user.username = user_email.lower()  # convert the email to lowercase
+            user.save()
+
             # check for tokens
             if "access_token" in tokens and "refresh_token" in tokens:
                 access_token = tokens["access_token"]
