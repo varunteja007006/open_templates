@@ -280,6 +280,7 @@ def login(request):
 @permission_classes([AllowAny])
 def signup(request):
     try:
+        # WE ARE USING USERNAME AS EMAIL
         # Check if the username already exists
         if User.objects.filter(username=request.data["username"]).exists():
             return Response(
@@ -292,9 +293,11 @@ def signup(request):
                 {"error": "Email already exists"}, status=status.HTTP_409_CONFLICT
             )
 
+        email = request.data["username"].lower()
+
         user = User.objects.create_user(
-            username=request.data["username"],
-            email=request.data["username"],
+            username=email,
+            email=email,
             first_name=request.data["first_name"],
             last_name=request.data["last_name"] if "last_name" in request.data else "",
             password=request.data["password"],
