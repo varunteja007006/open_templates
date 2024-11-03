@@ -4,7 +4,7 @@ from rest_framework.decorators import (
     api_view,
     permission_classes,
 )
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.permissions import IsAdminUser, AllowAny
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -15,6 +15,7 @@ from drf_social_oauth2.views import ConvertTokenView
 from oauth2_provider.models import get_refresh_token_model, get_access_token_model
 from oauthlib.common import generate_token
 from django.utils import timezone
+from django.db import transaction
 
 isHTTPOnly = True
 isSecure = True
@@ -34,18 +35,28 @@ class CustomConvertTokenView(ConvertTokenView):
             response = super().post(request, *args, **kwargs)
 
             tokens = response.data
-
             user_email = tokens["user"]["email"]
-            user = User.objects.get(email=user_email)
+            user_email_lower = user_email.lower()
 
-            if user is None:
-                return Response(
-                    {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
+            # Check for existing user by email and user from google signup
+            with transaction.atomic():
+                user_already = User.objects.filter(
+                    username=user_email or user_email_lower
                 )
+                google_signup_user = User.objects.filter(
+                    email=user_email or user_email_lower
+                ).exclude(username=user_email or user_email_lower)
 
-            user.email = user_email.lower()  # convert the email to lowercase
-            user.username = user_email.lower()  # convert the email to lowercase
-            user.save()
+                if user_already.exists():
+                    # If user already exists, delete the google signup user
+                    if google_signup_user.exists():
+                        google_signup_user.delete()
+                        raise Exception("User already exists")
+
+                else:
+                    google_signup_user.email = user_email_lower
+                    google_signup_user.username = user_email_lower
+                    google_signup_user.save()
 
             # check for tokens
             if "access_token" in tokens and "refresh_token" in tokens:
@@ -84,7 +95,13 @@ class CustomConvertTokenView(ConvertTokenView):
 
             return response
         except Exception as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            res = Response()
+            res.delete_cookie("token")
+            res.delete_cookie("access_token")
+            res.delete_cookie("refresh_token")
+            res.data = {"error": str(e)}
+            res.status_code = status.HTTP_400_BAD_REQUEST
+            return res
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -132,13 +149,11 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
         except KeyError as e:
             return Response(
-                {"error": f"Missing token: {str(e)}", "success": False},
+                {"error": f"Missing token: {str(e)}"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         except Exception as e:
-            return Response(
-                {"error": str(e), "success": False}, status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CustomTokenRefreshView(TokenRefreshView):
@@ -150,13 +165,7 @@ class CustomTokenRefreshView(TokenRefreshView):
             refresh_token = request.COOKIES.get("refresh_token")
 
             if not refresh_token:
-                res = Response()
-                res.delete_cookie("token")
-                res.delete_cookie("access_token")
-                res.delete_cookie("refresh_token")
-                res.data = {"error": "Refresh token missing or expired"}
-                res.status_code = status.HTTP_400_BAD_REQUEST
-                return res
+                raise Exception("Refresh token missing or expired")
 
             request.data["refresh"] = refresh_token
 
@@ -182,15 +191,15 @@ class CustomTokenRefreshView(TokenRefreshView):
             response.status_code = status.HTTP_200_OK
 
             return response
-        except KeyError as e:
-            return Response(
-                {"error": f"Missing token: {str(e)}", "success": False},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+
         except Exception as e:
-            return Response(
-                {"error": str(e), "success": False}, status=status.HTTP_400_BAD_REQUEST
-            )
+            res = Response()
+            res.delete_cookie("token")
+            res.delete_cookie("access_token")
+            res.delete_cookie("refresh_token")
+            res.data = {"error": str(e)}
+            res.status_code = status.HTTP_400_BAD_REQUEST
+            return res
 
 
 @api_view(["POST"])
@@ -200,13 +209,7 @@ def social_token_refresh(request):
         refresh_token = request.COOKIES.get("refresh_token")
 
         if not refresh_token:
-            res = Response()
-            res.delete_cookie("token")
-            res.delete_cookie("access_token")
-            res.delete_cookie("refresh_token")
-            res.data = {"error": "Refresh token missing or expired"}
-            res.status_code = status.HTTP_400_BAD_REQUEST
-            return res
+            raise Exception("Refresh token missing or expired")
 
         refresh_token_model = get_refresh_token_model()
 
@@ -214,12 +217,9 @@ def social_token_refresh(request):
 
         # Check if refresh token is still valid
         if refresh_token.revoked:
-            return Response(
-                {"error": "Refresh token has expired or is invalid"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-            # Generate new access token
+            raise Exception("Refresh token revoked")
 
+        # Generate new access token
         access_token_model = get_access_token_model()
 
         new_access_token = access_token_model(
@@ -248,8 +248,13 @@ def social_token_refresh(request):
         return response
 
     except Exception as e:
-        return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-    return None
+        res = Response()
+        res.delete_cookie("token")
+        res.delete_cookie("access_token")
+        res.delete_cookie("refresh_token")
+        res.data = {"error": str(e)}
+        res.status_code = status.HTTP_400_BAD_REQUEST
+        return res
 
 
 @api_view(["POST"])
