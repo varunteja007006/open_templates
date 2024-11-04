@@ -16,6 +16,7 @@ from oauth2_provider.models import get_refresh_token_model, get_access_token_mod
 from oauthlib.common import generate_token
 from django.utils import timezone
 from django.db import transaction
+from django.core.exceptions import ValidationError
 
 isHTTPOnly = True
 isSecure = True
@@ -28,80 +29,90 @@ days_1 = 1
 
 class CustomConvertTokenView(ConvertTokenView):
     permission_classes = [AllowAny]
+    with transaction.atomic():
 
-    def post(self, request, *args, **kwargs):
-        try:
-            # user info will go here, gets validated and returns the tokens
-            response = super().post(request, *args, **kwargs)
+        def post(self, request, *args, **kwargs):
+            try:
+                # user info will go here, gets validated and returns the tokens
+                response = super().post(request, *args, **kwargs)
 
-            tokens = response.data
-            user_email = tokens["user"]["email"]
-            user_email_lower = user_email.lower()
+                tokens = response.data
+                user_email = tokens["user"]["email"]
+                user_email_lower = user_email.lower()
 
-            # Check for existing user by email and user from google signup
-            with transaction.atomic():
+                # Check for existing user by email and user from google signup
+
                 user_already = User.objects.filter(
                     username=user_email or user_email_lower
                 )
+
                 google_signup_user = User.objects.filter(
                     email=user_email or user_email_lower
                 ).exclude(username=user_email or user_email_lower)
 
-                if user_already.exists():
+                if user_already.exists() and google_signup_user.exists():
                     # If user already exists, delete the google signup user
-                    if google_signup_user.exists():
-                        google_signup_user.delete()
-                        raise Exception("User already exists")
+                    google_signup_user.delete()
+                    raise ValidationError(
+                        "User already exists, please login with email and password"
+                    )
 
                 else:
-                    google_signup_user.email = user_email_lower
-                    google_signup_user.username = user_email_lower
-                    google_signup_user.save()
+                    google_user_instance = google_signup_user.first()
+                    print(
+                        "google_user_instance",
+                        google_user_instance.email,
+                        google_user_instance.username,
+                        user_email_lower,
+                    )
+                    google_user_instance.email = user_email_lower
+                    google_user_instance.username = user_email_lower
+                    google_user_instance.save()
 
-            # check for tokens
-            if "access_token" in tokens and "refresh_token" in tokens:
-                access_token = tokens["access_token"]
-                refresh_token = tokens["refresh_token"]
+                # check for tokens
+                if "access_token" in tokens and "refresh_token" in tokens:
+                    access_token = tokens["access_token"]
+                    refresh_token = tokens["refresh_token"]
 
-                # set cookies for both access and refresh
-                response.set_cookie(
-                    key="access_token",
-                    value=access_token,
-                    httponly=isHTTPOnly,
-                    secure=isSecure,
-                    samesite=isSameSite,
-                    path=isPath,
-                    expires=datetime.now() + timedelta(minutes=minutes),
-                )
+                    # set cookies for both access and refresh
+                    response.set_cookie(
+                        key="access_token",
+                        value=access_token,
+                        httponly=isHTTPOnly,
+                        secure=isSecure,
+                        samesite=isSameSite,
+                        path=isPath,
+                        expires=datetime.now() + timedelta(minutes=minutes),
+                    )
 
-                response.set_cookie(
-                    key="refresh_token",
-                    value=refresh_token,
-                    httponly=isHTTPOnly,
-                    secure=isSecure,
-                    samesite=isSameSite,
-                    path=isPath,
-                    expires=datetime.now() + timedelta(days=days_30),
-                )
-            else:
-                return Response(
-                    {"error": "Token generation failed"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
+                    response.set_cookie(
+                        key="refresh_token",
+                        value=refresh_token,
+                        httponly=isHTTPOnly,
+                        secure=isSecure,
+                        samesite=isSameSite,
+                        path=isPath,
+                        expires=datetime.now() + timedelta(days=days_30),
+                    )
+                else:
+                    return Response(
+                        {"error": "Token generation failed"},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
 
-            response.data = {"success": True}
+                response.data = {"success": True}
 
-            response.status_code = status.HTTP_200_OK
+                response.status_code = status.HTTP_200_OK
 
-            return response
-        except Exception as e:
-            res = Response()
-            res.delete_cookie("token")
-            res.delete_cookie("access_token")
-            res.delete_cookie("refresh_token")
-            res.data = {"error": str(e)}
-            res.status_code = status.HTTP_400_BAD_REQUEST
-            return res
+                return response
+            except Exception as e:
+                res = Response()
+                res.delete_cookie("token")
+                res.delete_cookie("access_token")
+                res.delete_cookie("refresh_token")
+                res.data = {"error": str(e)}
+                res.status_code = status.HTTP_400_BAD_REQUEST
+                return res
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -165,7 +176,7 @@ class CustomTokenRefreshView(TokenRefreshView):
             refresh_token = request.COOKIES.get("refresh_token")
 
             if not refresh_token:
-                raise Exception("Refresh token missing or expired")
+                raise ValidationError("Refresh token missing or expired")
 
             request.data["refresh"] = refresh_token
 
@@ -209,7 +220,7 @@ def social_token_refresh(request):
         refresh_token = request.COOKIES.get("refresh_token")
 
         if not refresh_token:
-            raise Exception("Refresh token missing or expired")
+            raise ValidationError("Refresh token missing or expired")
 
         refresh_token_model = get_refresh_token_model()
 
@@ -217,7 +228,7 @@ def social_token_refresh(request):
 
         # Check if refresh token is still valid
         if refresh_token.revoked:
-            raise Exception("Refresh token revoked")
+            raise ValidationError("Refresh token revoked")
 
         # Generate new access token
         access_token_model = get_access_token_model()

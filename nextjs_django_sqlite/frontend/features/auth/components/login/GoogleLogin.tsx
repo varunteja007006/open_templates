@@ -5,10 +5,10 @@ import { useAuthContext } from "@/features/auth/context/auth.context";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
-export default function GoogleLogin({
-  client_id,
-}: Readonly<{ client_id: string }>) {
+export default function GoogleLogin() {
   const { socialLogin } = useAuthContext();
+
+  const alreadyCalled = React.useRef(false);
 
   const { toast } = useToast();
 
@@ -23,18 +23,17 @@ export default function GoogleLogin({
   const error = hashParams.get("error");
 
   const handleLogin = async (token: string) => {
-    socialLogin.mutate({
-      client_id,
-      token,
-    });
+    socialLogin.mutate({ token: token, client_id: "" });
   };
 
   React.useEffect(() => {
-    if (access_token) {
+    if (access_token && !alreadyCalled.current) {
+      alreadyCalled.current = true;
       handleLogin(access_token);
-      router;
     }
+  }, [access_token]);
 
+  React.useEffect(() => {
     if (error === "access_denied") {
       toast({
         title: "Login Failed",
@@ -42,7 +41,7 @@ export default function GoogleLogin({
       });
       router.push("/login");
     }
-  }, [access_token, error]);
+  }, [error]);
 
   return <div>GoogleLogin</div>;
 }

@@ -23,9 +23,7 @@ import OtherLogins from "@/features/auth/components/login/other-logins";
 import { LoginFormSchemaType } from "../../types/auth.types";
 import Required from "@/components/common/Required";
 
-export default function LoginForm({
-  client_id,
-}: Readonly<{ client_id: string }>) {
+export default function LoginForm() {
   const { login, loginV2 } = useAuthContext();
 
   const form = useForm<LoginFormSchemaType>({
@@ -109,7 +107,7 @@ export default function LoginForm({
           </Form>
         </div>
         <div>
-          <OtherLogins client_id={client_id} />
+          <OtherLogins />
         </div>
       </div>
     </Card>

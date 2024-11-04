@@ -70,13 +70,13 @@ export const socialTokenRefresh = async () => {
   return response.data;
 };
 
-export async function loginWithGoogle({
+export function loginWithGoogle({
   state,
   client_id,
 }: {
   state?: string;
   client_id: string;
-}): Promise<void> {
+}) {
   const oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
 
   // Parameters to pass to OAuth 2.0 endpoint.

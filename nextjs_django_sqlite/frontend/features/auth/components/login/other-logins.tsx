@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import { FaGoogle } from "react-icons/fa6";
 import MyTooltip from "@/components/ui/custom/MyTooltip";
 
-import { loginWithGoogle } from "@/features/auth/api/login.api";
+import { useAuthContext } from "../../context/auth.context";
 
-export default function OtherLogins({
-  client_id,
-}: Readonly<{ client_id: string }>) {
-  const onClickGoogleLogin = () => {
-    loginWithGoogle({ client_id });
+export default function OtherLogins() {
+  const { onClickGoogleLogin } = useAuthContext();
+
+  const onClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    // Extract state from somewhere, or pass it directly
+    onClickGoogleLogin();
   };
 
   return (
@@ -19,7 +20,7 @@ export default function OtherLogins({
       <MyTooltip text={"Sign in with Google"}>
         <Button
           type="button"
-          onClick={onClickGoogleLogin}
+          onClick={onClick}
           variant={"outline"}
           size={"icon"}
         >

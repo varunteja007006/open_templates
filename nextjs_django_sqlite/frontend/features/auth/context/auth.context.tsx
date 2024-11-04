@@ -5,6 +5,7 @@ import { useMutation, UseMutationResult } from "react-query";
 import {
   loginUser,
   loginUserV2,
+  loginWithGoogle,
   logoutUser,
   signup,
   socialTokenLogin,
@@ -46,14 +47,22 @@ type authContextType = {
     AxiosError,
     socialLoginPayloadType
   >;
+  onClickGoogleLogin: (state?: string) => void;
+};
+
+export type TypeGoogleLoginClientID = {
+  google_client_id: string;
+  django_google_client_id: string;
 };
 
 const authContext = React.createContext<authContextType | null>(null);
 
 export function AuthContextProvider({
   children,
+  GoogleLogin,
 }: Readonly<{
   children: React.ReactNode;
+  GoogleLogin: TypeGoogleLoginClientID;
 }>) {
   const router = useRouter();
   const pathname = usePathname();
@@ -162,13 +171,20 @@ export function AuthContextProvider({
     AxiosError,
     socialLoginPayloadType
   >({
-    mutationFn: socialTokenLogin,
+    mutationFn: ({ token }) =>
+      socialTokenLogin({
+        token,
+        client_id: GoogleLogin.django_google_client_id,
+      }),
     onSuccess,
     onError: (error) => {
       onError(error);
       router.push("/login");
     },
   });
+
+  const onClickGoogleLogin = (state?: string) =>
+    loginWithGoogle({ state, client_id: GoogleLogin.google_client_id });
 
   React.useEffect(() => {
     if (validateToken.isError || validateToken.isLoading) {
@@ -210,6 +226,7 @@ export function AuthContextProvider({
       loginV2,
       socialLogin,
       signUp,
+      onClickGoogleLogin,
     }),
     [userData, logout]
   );

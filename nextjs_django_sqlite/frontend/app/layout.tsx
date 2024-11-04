@@ -34,7 +34,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-w-[420px] !md:min-w-[99vw] scroll-smooth dark:bg-black`}
       >
-        <Provider>
+        <Provider
+          GoogleLogin={{
+            google_client_id: process.env.GOOGLE_CLIENT_ID ?? "",
+            django_google_client_id: process.env.DJANGO_GOOGLE_AUTH_ID ?? "",
+          }}
+        >
           <header>
             <NavigationMenuComp />
           </header>
