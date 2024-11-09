@@ -36,11 +36,11 @@ export default function BasicProfile() {
       <CardContent className="space-y-3">
         <div className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-4">
           <p>Full Name:</p>
-          <p>{userData?.full_name ?? ""}</p>
+          <p>{userData?.full_name || ""}</p>
         </div>
         <div className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-4">
           <p>Email:</p>
-          <p>{userData?.email ?? ""}</p>
+          <p>{userData?.email || ""}</p>
         </div>
       </CardContent>
     </Card>

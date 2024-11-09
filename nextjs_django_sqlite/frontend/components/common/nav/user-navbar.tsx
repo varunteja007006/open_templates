@@ -26,7 +26,7 @@ export default function UserNavbar() {
               <HoverCardTrigger asChild>
                 <Button variant={`link`} asChild>
                   <Link href="/user-profile" className="text-base">
-                    {userData?.full_name ?? "USER"}
+                    {userData?.full_name || "USER"}
                   </Link>
                 </Button>
               </HoverCardTrigger>
@@ -34,10 +34,14 @@ export default function UserNavbar() {
                 <p className="text-sm">{userData?.email}</p>
               </HoverCardContent>
             </HoverCard>
-            <Avatar>
-              <AvatarImage src="" />
-              <AvatarFallback>{userData?.full_name?.[0] || "U"}</AvatarFallback>
-            </Avatar>
+            <Link href="/user-profile">
+              <Avatar>
+                <AvatarImage src="" />
+                <AvatarFallback>
+                  {userData?.full_name?.[0] || "U"}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
           </div>
         ) : (
           <Button variant={"default"} asChild>

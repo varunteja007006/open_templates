@@ -186,16 +186,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [  # if users are required to be authenticated
         "rest_framework.permissions.IsAuthenticated",
     ],
-    "DEFAULT_THROTTLE_CLASSES": [  # if user requests have to be throttled
-        "rest_framework.throttling.AnonRateThrottle",
-        "rest_framework.throttling.UserRateThrottle",
-        "rest_framework.throttling.ScopedRateThrottle",
-    ],
-    "DEFAULT_THROTTLE_RATES": {  # user requests to be throttled
-        "anon": "100/day",
-        "user": "1000/day",
-        "profile-upload": "5/day",
-    },
+    # "DEFAULT_THROTTLE_CLASSES": [  # if user requests have to be throttled
+    #     "rest_framework.throttling.AnonRateThrottle",
+    #     "rest_framework.throttling.UserRateThrottle",
+    #     "rest_framework.throttling.ScopedRateThrottle",
+    # ],
+    # "DEFAULT_THROTTLE_RATES": {  # user requests to be throttled
+    #     "anon": "100/day",
+    #     "user": "1000/day",
+    #     "profile-upload": "5/day",
+    # },
     "DEFAULT_AUTHENTICATION_CLASSES": (  # authentication classes
         "login.authentication.CustomCookiesJWTAuthentication",
         "login.authentication.CustomSocialAuthentication",
