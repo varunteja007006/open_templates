@@ -20,7 +20,6 @@ import {
   socialLoginPayloadType,
 } from "../types/auth.types";
 import { LOGIN_ROUTES, UNPROTECTED_ROUTES } from "@/constants/routes.constant";
-import { ToastErrorObj } from "@/types/api.types";
 
 type UserState = User;
 
@@ -105,7 +104,7 @@ export function AuthContextProvider({
   }
 
   function onError(error: AxiosError) {
-    toast(error.response?.data as ToastErrorObj);
+    console.error(error);
   }
 
   function onLogoutSuccess(response: { success: boolean }) {
