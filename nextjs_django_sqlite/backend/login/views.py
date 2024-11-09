@@ -29,6 +29,7 @@ days_1 = 1
 
 class CustomConvertTokenView(ConvertTokenView):
     permission_classes = [AllowAny]
+
     with transaction.atomic():
 
         def post(self, request, *args, **kwargs):
