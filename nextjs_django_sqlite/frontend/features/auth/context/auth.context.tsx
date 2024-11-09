@@ -104,6 +104,13 @@ export function AuthContextProvider({
   }
 
   function onError(error: AxiosError) {
+    if (error.response?.headers["content-type"] === "application/json") {
+      toast({
+        variant: "destructive",
+        description:
+          JSON.stringify(error.response?.data) || "Something went wrong",
+      });
+    }
     console.error(error);
   }
 
