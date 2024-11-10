@@ -101,7 +101,11 @@ class CustomConvertTokenView(ConvertTokenView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
 
-                response.data = {"success": True}
+                response.data = {
+                    "success": True,
+                    "access_token": access_token,
+                    "refresh_token": refresh_token,
+                }
 
                 response.status_code = status.HTTP_200_OK
 
@@ -153,7 +157,11 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                     expires=datetime.now() + timedelta(days=days_30),
                 )
 
-            response.data = {"success": True}
+            response.data = {
+                "success": True,
+                "access_token": access_token,
+                "refresh_token": refresh_token,
+            }
 
             response.status_code = status.HTTP_200_OK
 
@@ -198,7 +206,11 @@ class CustomTokenRefreshView(TokenRefreshView):
                     expires=datetime.now() + timedelta(minutes=minutes),
                 )
 
-            response.data = {"success": True}
+            response.data = {
+                "success": True,
+                "access_token": access_token,
+                "refresh_token": refresh_token,
+            }
 
             response.status_code = status.HTTP_200_OK
 
@@ -244,7 +256,13 @@ def social_token_refresh(request):
         )
         new_access_token.save()
 
-        response = Response({"success": True})
+        response = Response(
+            {
+                "success": True,
+                "access_token": new_access_token.token,
+                "refresh_token": refresh_token,
+            }
+        )
 
         response.set_cookie(
             key="access_token",
@@ -286,6 +304,7 @@ def login(request):
 
         response.data = {
             "success": True,
+            "token": token.key,
         }
 
         response.set_cookie(
@@ -339,6 +358,7 @@ def signup(request):
 
         response.data = {
             "success": True,
+            "token": token.key,
         }
 
         response.set_cookie(
