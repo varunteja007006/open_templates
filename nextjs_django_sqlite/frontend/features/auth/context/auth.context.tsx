@@ -3,8 +3,6 @@ import * as React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useMutation, UseMutationResult } from "react-query";
 import {
-  loginUser,
-  loginUserV2,
   loginWithGoogle,
   logoutUser,
   socialTokenLogin,
@@ -13,27 +11,16 @@ import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { User } from "@/types/user.types";
 import { validateTokenQuery } from "../api/login.query";
-import {
-  LoginFormSchemaType,
-  socialLoginPayloadType,
-} from "../types/auth.types";
+import { socialLoginPayloadType } from "../types/auth.types";
 import { LOGIN_ROUTES, UNPROTECTED_ROUTES } from "@/constants/routes.constant";
 
 type UserState = User;
-
-type LoginMutation = UseMutationResult<
-  { success: boolean },
-  AxiosError,
-  LoginFormSchemaType
->;
 
 type authContextType = {
   userData: UserState | null;
   setUserData: React.Dispatch<React.SetStateAction<UserState | null>>;
   reset: () => void;
   logout: UseMutationResult<unknown, Error, void, unknown>;
-  login: LoginMutation;
-  loginV2: LoginMutation;
   socialLogin: UseMutationResult<
     { success: boolean },
     AxiosError,
@@ -135,26 +122,6 @@ export function AuthContextProvider({
     onSettled: onLogoutSettled,
   });
 
-  const login = useMutation<
-    { success: boolean },
-    AxiosError,
-    LoginFormSchemaType
-  >({
-    mutationFn: loginUser,
-    onSuccess,
-    onError,
-  });
-
-  const loginV2 = useMutation<
-    { success: boolean },
-    AxiosError,
-    LoginFormSchemaType
-  >({
-    mutationFn: loginUserV2,
-    onSuccess,
-    onError,
-  });
-
   const socialLogin = useMutation<
     { success: boolean },
     AxiosError,
@@ -211,8 +178,6 @@ export function AuthContextProvider({
       setUserData,
       userData,
       logout,
-      login,
-      loginV2,
       socialLogin,
       onClickGoogleLogin,
     }),

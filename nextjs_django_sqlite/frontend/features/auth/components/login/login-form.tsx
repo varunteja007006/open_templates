@@ -18,24 +18,40 @@ import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { LoginFormSchema } from "@/features/auth/schema/auth.schema";
-import { useAuthContext } from "@/features/auth/context/auth.context";
 import OtherLogins from "@/features/auth/components/login/other-logins";
 import { LoginFormSchemaType } from "../../types/auth.types";
 import Required from "@/components/common/Required";
+import { login, loginV2 } from "@/features/auth/actions/actions";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  const { login, loginV2 } = useAuthContext();
+  const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<LoginFormSchemaType>({
     resolver: zodResolver(LoginFormSchema),
   });
 
-  function onSubmit(data: LoginFormSchemaType) {
+  async function onSubmit(data: LoginFormSchemaType) {
+    let res;
     if (form.getValues("rememberLogin")) {
-      loginV2.mutate(data);
-      return;
+      res = await loginV2(data);
+    } else {
+      res = await login(data);
     }
-    login.mutate(data);
+    if (res === true) {
+      toast({
+        variant: "success",
+        description: "Login Successful",
+      });
+      router.push("/");
+    } else {
+      toast({
+        variant: "destructive",
+        description: res,
+      });
+    }
   }
 
   return (
