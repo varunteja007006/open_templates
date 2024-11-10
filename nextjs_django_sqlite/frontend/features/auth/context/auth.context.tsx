@@ -7,7 +7,6 @@ import {
   loginUserV2,
   loginWithGoogle,
   logoutUser,
-  signup,
   socialTokenLogin,
 } from "@/features/auth/api/login.api";
 import { useToast } from "@/hooks/use-toast";
@@ -16,7 +15,6 @@ import { User } from "@/types/user.types";
 import { validateTokenQuery } from "../api/login.query";
 import {
   LoginFormSchemaType,
-  SignUpFormSchemaType,
   socialLoginPayloadType,
 } from "../types/auth.types";
 import { LOGIN_ROUTES, UNPROTECTED_ROUTES } from "@/constants/routes.constant";
@@ -36,11 +34,6 @@ type authContextType = {
   logout: UseMutationResult<unknown, Error, void, unknown>;
   login: LoginMutation;
   loginV2: LoginMutation;
-  signUp: UseMutationResult<
-    { success: boolean },
-    AxiosError,
-    SignUpFormSchemaType
-  >;
   socialLogin: UseMutationResult<
     { success: boolean },
     AxiosError,
@@ -162,16 +155,6 @@ export function AuthContextProvider({
     onError,
   });
 
-  const signUp = useMutation<
-    { success: boolean },
-    AxiosError,
-    SignUpFormSchemaType
-  >({
-    mutationFn: signup,
-    onSuccess,
-    onError,
-  });
-
   const socialLogin = useMutation<
     { success: boolean },
     AxiosError,
@@ -231,7 +214,6 @@ export function AuthContextProvider({
       login,
       loginV2,
       socialLogin,
-      signUp,
       onClickGoogleLogin,
     }),
     [userData, logout]

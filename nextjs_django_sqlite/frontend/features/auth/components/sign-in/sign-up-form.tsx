@@ -17,14 +17,18 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 
 import { SignUpFormSchema } from "@/features/auth/schema/auth.schema";
-import { useAuthContext } from "@/features/auth/context/auth.context";
 import { SignUpFormSchemaType } from "../../types/auth.types";
 import Required from "@/components/common/Required";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import MyTooltip from "@/components/ui/custom/MyTooltip";
+import { signup } from "@/features/auth/actions/actions";
+import _ from "lodash";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {
-  const { signUp } = useAuthContext();
+  const { toast } = useToast();
+  const router = useRouter();
 
   const [stage, setStage] = React.useState(1);
 
@@ -32,8 +36,20 @@ export default function SignUpForm() {
     resolver: zodResolver(SignUpFormSchema),
   });
 
-  function onSubmit(data: SignUpFormSchemaType) {
-    signUp.mutate(data);
+  async function onSubmit(data: SignUpFormSchemaType) {
+    const res = await signup(data);
+    if (res === true) {
+      toast({
+        variant: "success",
+        description: "Sign up Successful",
+      });
+      router.push("/");
+    } else {
+      toast({
+        variant: "destructive",
+        description: res,
+      });
+    }
   }
 
   return (
@@ -149,20 +165,26 @@ export default function SignUpForm() {
                   </FormItem>
                 )}
               />
-              <div className="w-full flex items-center justify-between">
-                <MyTooltip text={"Back"}>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setStage(1)}
-                    size={"icon"}
-                  >
-                    <ChevronLeft />
+
+              <div className="flex flex-col gap-3 items-center">
+                <div className="w-full flex items-center justify-between">
+                  <MyTooltip text={"Back"}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setStage(1)}
+                      size={"icon"}
+                    >
+                      <ChevronLeft />
+                    </Button>
+                  </MyTooltip>
+                  <Button type="submit" variant="success">
+                    Sign up
                   </Button>
-                </MyTooltip>
-                <Button type="submit" variant="success">
-                  Sign up
-                </Button>
+                </div>
+                {!_.isEmpty(form.formState.errors) && (
+                  <FormMessage>Please correct your form</FormMessage>
+                )}
               </div>
             </>
           )}
