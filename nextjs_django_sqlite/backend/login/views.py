@@ -58,7 +58,7 @@ class CustomConvertTokenView(ConvertTokenView):
                         "User already exists, please login with email and password"
                     )
 
-                else:
+                elif google_signup_user.exists():
                     google_user_instance = google_signup_user.first()
                     print(
                         "google_user_instance",
