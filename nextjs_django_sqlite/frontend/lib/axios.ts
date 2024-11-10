@@ -1,9 +1,6 @@
 import axios from "axios";
 
-import {
-  loginUserRefreshV2,
-  socialTokenRefresh,
-} from "@/features/auth/api/login.api";
+import { refreshSession } from "@/features/auth/api/login.api";
 
 import _ from "lodash";
 
@@ -21,41 +18,12 @@ axios.interceptors.response.use(
   },
 
   async function (error) {
-    const refresh = async () => {
-      try {
-        return await loginUserRefreshV2();
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    const refresh2 = async () => {
-      try {
-        return await socialTokenRefresh();
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    const callRefresh = async () => {
-      const onSuccess = () => {
-        if (typeof window !== "undefined") {
-          window.location.href = "/";
-        }
-      };
-
-      let res = await refresh();
-      if (!res?.success) {
-        res = await refresh2();
-      }
-
-      if (res?.success) {
-        onSuccess();
-      }
-    };
-
-    if (error.response?.status === 401) {
-      await callRefresh(); // Awaiting here ensures proper flow.
+    if (
+      error.response?.status === 401 &&
+      error.config.url === "/api/v1/auth/validate-token"
+    ) {
+      console.log("Here");
+      await callRefresh();
     }
 
     if (error.response.headers["content-type"] === "application/json") {
@@ -70,3 +38,20 @@ axios.interceptors.response.use(
 );
 
 export default axios;
+
+const callRefresh = async () => {
+  const onSuccess = () => {
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
+  };
+
+  try {
+    let res = await refreshSession();
+    if (res?.success) {
+      onSuccess();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};

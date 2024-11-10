@@ -1,13 +1,6 @@
 import axios from "@/lib/axios";
 import { socialLoginPayloadType, validateTokenType } from "../types/auth.types";
 
-export const loginUserRefreshV2 = async () => {
-  const response = await axios.post<{ success: boolean }>(
-    "/api/v1/auth/login/token/refresh/v2"
-  );
-  return response.data;
-};
-
 export const logoutUser = async () => {
   const response = await axios.post<{ success: boolean }>(
     "/api/v1/auth/logout"
@@ -63,9 +56,11 @@ export const socialTokenLogin = async (data: socialLoginPayloadType) => {
   return response.data;
 };
 
-export const socialTokenRefresh = async () => {
-  const response = await axios.post<{ success: boolean }>(
-    "/api/v1/auth/login/token/refresh/social-token/v2"
-  );
+export const refreshSession = async () => {
+  const response = await axios.post<{
+    success: boolean;
+    access_token: string;
+    refresh_token: string;
+  }>("api/v1/auth/login/token/combined-refresh-token/v2");
   return response.data;
 };

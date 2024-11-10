@@ -40,4 +40,9 @@ urlpatterns = [
         views.social_token_refresh,
         name="social_token_refresh",
     ),
+    path(
+        "login/token/combined-refresh-token/v2",
+        views.CombinedTokenRefreshView.as_view(),
+        name="combined_refresh_token",
+    ),
 ]
