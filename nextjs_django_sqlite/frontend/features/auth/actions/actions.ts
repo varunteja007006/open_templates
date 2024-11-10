@@ -1,6 +1,10 @@
 "use server";
 import axios from "@/lib/axios";
-import { LoginFormSchemaType, SignUpFormSchemaType } from "../types/auth.types";
+import {
+  LoginFormSchemaType,
+  SignUpFormSchemaType,
+  socialLoginPayloadType,
+} from "../types/auth.types";
 import { cookies } from "next/headers";
 
 export const signup = async (data: SignUpFormSchemaType) => {
@@ -50,6 +54,31 @@ export const loginV2 = async (data: LoginFormSchemaType) => {
       access_token: string;
       refresh_token: string;
     }>("/api/v1/auth/login/token/v2", data);
+
+    if (response.data.success) {
+      cookie.set("access_token", response.data.access_token);
+      cookie.set("refresh_token", response.data.refresh_token);
+    }
+
+    return response.data.success;
+  } catch (error: any) {
+    return error.response?.data;
+  }
+};
+
+export const socialTokenLogin = async (data: socialLoginPayloadType) => {
+  const cookie = cookies();
+
+  try {
+    const response = await axios.post<{
+      success: boolean;
+      access_token: string;
+      refresh_token: string;
+    }>("/api/v1/auth/login/token/convert/social-token/v2", {
+      grant_type: "convert_token",
+      backend: "google-oauth2",
+      ...data,
+    });
 
     if (response.data.success) {
       cookie.set("access_token", response.data.access_token);

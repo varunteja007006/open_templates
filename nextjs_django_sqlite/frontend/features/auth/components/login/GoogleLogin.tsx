@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
 export default function GoogleLogin() {
-  const { socialLogin } = useAuthContext();
+  const { googleLogin } = useAuthContext();
 
   const alreadyCalled = React.useRef(false);
 
@@ -23,7 +23,7 @@ export default function GoogleLogin() {
   const error = hashParams.get("error");
 
   const handleLogin = async (token: string) => {
-    socialLogin.mutate({ token: token, client_id: "" });
+    googleLogin(token);
   };
 
   React.useEffect(() => {
