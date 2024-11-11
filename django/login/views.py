@@ -7,7 +7,13 @@ from rest_framework.decorators import (
 from rest_framework.permissions import IsAdminUser, AllowAny
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.models import TokenUser
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from django.shortcuts import get_object_or_404
 from datetime import datetime, timedelta
 from .serializer import CustomTokenObtainPairViewSerializer
@@ -17,6 +23,7 @@ from oauthlib.common import generate_token
 from django.utils import timezone
 from django.db import transaction
 from django.core.exceptions import ValidationError
+from rest_framework.views import APIView
 
 isHTTPOnly = True
 isSecure = True
@@ -42,7 +49,6 @@ class CustomConvertTokenView(ConvertTokenView):
                 user_email_lower = user_email.lower()
 
                 # Check for existing user by email and user from google signup
-
                 user_already = User.objects.filter(
                     username=user_email or user_email_lower
                 )
@@ -58,7 +64,7 @@ class CustomConvertTokenView(ConvertTokenView):
                         "User already exists, please login with email and password"
                     )
 
-                else:
+                elif google_signup_user.exists():
                     google_user_instance = google_signup_user.first()
                     print(
                         "google_user_instance",
@@ -101,16 +107,17 @@ class CustomConvertTokenView(ConvertTokenView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
 
-                response.data = {"success": True}
+                response.data = {
+                    "success": True,
+                    "access_token": access_token,
+                    "refresh_token": refresh_token,
+                }
 
                 response.status_code = status.HTTP_200_OK
 
                 return response
             except Exception as e:
                 res = Response()
-                res.delete_cookie("token")
-                res.delete_cookie("access_token")
-                res.delete_cookie("refresh_token")
                 res.data = {"error": str(e)}
                 res.status_code = status.HTTP_400_BAD_REQUEST
                 return res
@@ -153,7 +160,11 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                     expires=datetime.now() + timedelta(days=days_30),
                 )
 
-            response.data = {"success": True}
+            response.data = {
+                "success": True,
+                "access_token": access_token,
+                "refresh_token": refresh_token,
+            }
 
             response.status_code = status.HTTP_200_OK
 
@@ -198,7 +209,11 @@ class CustomTokenRefreshView(TokenRefreshView):
                     expires=datetime.now() + timedelta(minutes=minutes),
                 )
 
-            response.data = {"success": True}
+            response.data = {
+                "success": True,
+                "access_token": access_token,
+                "refresh_token": refresh_token,
+            }
 
             response.status_code = status.HTTP_200_OK
 
@@ -211,6 +226,79 @@ class CustomTokenRefreshView(TokenRefreshView):
             res.delete_cookie("refresh_token")
             res.data = {"error": str(e)}
             res.status_code = status.HTTP_400_BAD_REQUEST
+            return res
+
+
+class CombinedTokenRefreshView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            refresh_token = request.COOKIES.get("refresh_token")
+            if not refresh_token:
+                raise ValidationError("Refresh token missing or expired")
+
+            # Handle for social refresh
+            refresh_token_model = get_refresh_token_model()
+            try:
+                social_refresh_token = refresh_token_model.objects.get(
+                    token=refresh_token
+                )
+            except refresh_token_model.DoesNotExist:
+                social_refresh_token = None
+
+            if social_refresh_token is not None:
+                # Check if refresh token is still valid
+                if social_refresh_token.revoked:
+                    raise ValidationError("Refresh token revoked")
+
+                # Generate new access token
+                access_token_model = get_access_token_model()
+                new_access_token = access_token_model(
+                    user=social_refresh_token.user,
+                    token=generate_token(),
+                    application=social_refresh_token.application,
+                    expires=timezone.now()
+                    + timezone.timedelta(hours=1),  # Set desired expiration
+                    scope=social_refresh_token.access_token.scope,
+                )
+                new_access_token.save()
+                access_token = new_access_token.token
+
+            else:
+                # Handle for Simple JWT social Auth
+                access_token = str(RefreshToken(refresh_token).access_token)
+
+            response = Response()
+            if access_token:
+                response.set_cookie(
+                    key="access_token",
+                    value=access_token,
+                    httponly=True,
+                    secure=True,
+                    samesite="Lax",
+                    path="/",
+                    expires=datetime.now() + timedelta(minutes=60),
+                )
+
+            response.data = {
+                "success": True,
+                "access_token": access_token,
+                "refresh_token": refresh_token,
+            }
+            response.status_code = status.HTTP_200_OK
+            return response
+
+        except ValidationError as e:
+            res = Response({"error": str(e)})
+            res.status_code = status.HTTP_400_BAD_REQUEST
+            return res
+
+        except Exception as e:
+            res = Response({"error": str(e)})
+            res.status_code = status.HTTP_400_BAD_REQUEST
+            res.delete_cookie("refresh_token")
+            res.delete_cookie("access_token")
             return res
 
 
@@ -244,7 +332,13 @@ def social_token_refresh(request):
         )
         new_access_token.save()
 
-        response = Response({"success": True})
+        response = Response(
+            {
+                "success": True,
+                "access_token": new_access_token.token,
+                "refresh_token": refresh_token,
+            }
+        )
 
         response.set_cookie(
             key="access_token",
@@ -286,6 +380,7 @@ def login(request):
 
         response.data = {
             "success": True,
+            "token": token.key,
         }
 
         response.set_cookie(
@@ -303,6 +398,12 @@ def login(request):
 
     except User.DoesNotExist:
         return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    except Exception as e:
+        res = Response()
+        res.data = {"error": str(e)}
+        res.status_code = status.HTTP_400_BAD_REQUEST
+        return res
 
 
 @api_view(["POST"])
@@ -339,6 +440,7 @@ def signup(request):
 
         response.data = {
             "success": True,
+            "token": token.key,
         }
 
         response.set_cookie(
@@ -393,6 +495,7 @@ def logout(request):
 
 
 @api_view(["GET"])
+@permission_classes([AllowAny])
 def validate_token(request):
     if request.user.is_authenticated:
         user_data = {

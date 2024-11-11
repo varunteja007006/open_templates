@@ -197,12 +197,16 @@ REST_FRAMEWORK = {
     #     "profile-upload": "5/day",
     # },
     "DEFAULT_AUTHENTICATION_CLASSES": (  # authentication classes
-        "login.authentication.CustomCookiesJWTAuthentication",
-        "login.authentication.CustomSocialAuthentication",
+        # custom auth classes
+        "login.authentication.CombinedCookieAuthentication",
+        #
+        #
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+        #
         # OAuth
+        #
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",  # django-oauth-toolkit >= 1.0.0
         "drf_social_oauth2.authentication.SocialAuthentication",
     ),
