@@ -32,10 +32,10 @@ DJANGO_DEBUG = env("DJANGO_DEBUG")
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = "django-insecure-3r1w$p7ew0okqa6yd!h_2n8+0@womut@8%z9pv-u$wg+ng$(5="
+SECRET_KEY = DJANGO_SECRET
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DJANGO_DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -253,16 +253,10 @@ SIMPLE_JWT = {
     "AUTH_COOKIE_SAMESITE": "Lax",  # Adjust according to your needs. This can be 'Lax', 'Strict', or None to disable the flag.
 }
 
-if DEBUG:
-    CORS_ORIGIN_ALLOW_ALL = False
-    CORS_ORIGIN_WHITELIST = [
-        "http://localhost:3000",
-    ]
-    CORS_ALLOW_CREDENTIALS = True
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-else:
-    CORS_ORIGIN_ALLOW_ALL = False
-    CORS_ORIGIN_WHITELIST = [
-        "http://localhost:3000",
-    ]
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True

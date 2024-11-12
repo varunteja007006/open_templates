@@ -1,31 +1,31 @@
 services:
   backend:
     build:
-      context: ./backend
+      context: ./django
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app # Maps code for live updates
+      - ./django:/app # Maps code for live updates
     env_file:
-      - ./backend/.env
+      - ./django/.env
     networks:
       - app-network
 
   frontend:
     build:
-      context: ./frontend
+      context: ./nextjs
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
       - backend
     volumes:
-      - ./frontend:/app # Maps code for live updates
+      - ./nextjs:/app # Maps code for live updates
       - /app/node_modules # Maps code for live updates
       - /app/.next # Maps code for live updates
     env_file:
-      - ./frontend/.env
+      - ./nextjs/.env
     networks:
       - app-network
 
