@@ -2,51 +2,22 @@ import * as React from "react";
 
 import { usePathname, useRouter } from "next/navigation";
 import { useMutation, UseMutationResult } from "react-query";
-import {
-  loginUser,
-  loginUserV2,
-  loginWithGoogle,
-  logoutUser,
-  signup,
-  socialTokenLogin,
-} from "@/features/auth/api/login.api";
+import { loginWithGoogle, logoutUser } from "@/features/auth/api/login.api";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { User } from "@/types/user.types";
 import { validateTokenQuery } from "../api/login.query";
-import {
-  LoginFormSchemaType,
-  SignUpFormSchemaType,
-  socialLoginPayloadType,
-} from "../types/auth.types";
 import { LOGIN_ROUTES, UNPROTECTED_ROUTES } from "@/constants/routes.constant";
+import { socialTokenLogin } from "@/features/auth/actions/actions";
 
 type UserState = User;
 
-type LoginMutation = UseMutationResult<
-  { success: boolean },
-  AxiosError,
-  LoginFormSchemaType
->;
-
 type authContextType = {
   userData: UserState | null;
-  setUserData: React.Dispatch<React.SetStateAction<UserState | null>>;
-  reset: () => void;
   logout: UseMutationResult<unknown, Error, void, unknown>;
-  login: LoginMutation;
-  loginV2: LoginMutation;
-  signUp: UseMutationResult<
-    { success: boolean },
-    AxiosError,
-    SignUpFormSchemaType
-  >;
-  socialLogin: UseMutationResult<
-    { success: boolean },
-    AxiosError,
-    socialLoginPayloadType
-  >;
+  reset: () => void;
   onClickGoogleLogin: (state?: string) => void;
+  googleLogin: (token: string) => Promise<void>;
 };
 
 export type TypeGoogleLoginClientID = {
@@ -70,38 +41,19 @@ export function AuthContextProvider({
 
   const [userData, setUserData] = React.useState<UserState | null>(null);
 
+  const validateToken = validateTokenQuery(true);
+
   const reset = React.useCallback(() => {
-    // clear storage
+    // clear storage if needed
     // localStorage.clear();
-    // sessionStorage.clear();
+    sessionStorage.clear();
 
     // reset the user state
     setUserData(null);
+
     // redirect to login
     router.push("/login");
   }, []);
-
-  const validateToken = validateTokenQuery(true);
-
-  function onSuccess(response: { success: boolean } | undefined) {
-    // If response failed
-    if (!response) {
-      toast({
-        title: "Login Failed",
-        description: `Oops something went wrong!`,
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (response.success) {
-      toast({
-        title: "Login Successful",
-        variant: "success",
-      });
-      validateToken.refetch();
-    }
-  }
 
   function onError(error: AxiosError) {
     if (error.response?.headers["content-type"] === "application/json") {
@@ -142,52 +94,27 @@ export function AuthContextProvider({
     onSettled: onLogoutSettled,
   });
 
-  const login = useMutation<
-    { success: boolean },
-    AxiosError,
-    LoginFormSchemaType
-  >({
-    mutationFn: loginUser,
-    onSuccess,
-    onError,
-  });
+  const googleLogin = async (token: string) => {
+    const res = await socialTokenLogin({
+      token: token,
+      client_id: GoogleLogin.django_google_client_id,
+    });
 
-  const loginV2 = useMutation<
-    { success: boolean },
-    AxiosError,
-    LoginFormSchemaType
-  >({
-    mutationFn: loginUserV2,
-    onSuccess,
-    onError,
-  });
-
-  const signUp = useMutation<
-    { success: boolean },
-    AxiosError,
-    SignUpFormSchemaType
-  >({
-    mutationFn: signup,
-    onSuccess,
-    onError,
-  });
-
-  const socialLogin = useMutation<
-    { success: boolean },
-    AxiosError,
-    socialLoginPayloadType
-  >({
-    mutationFn: ({ token }) =>
-      socialTokenLogin({
-        token,
-        client_id: GoogleLogin.django_google_client_id,
-      }),
-    onSuccess,
-    onError: (error) => {
-      onError(error);
+    if (res === true) {
+      toast({
+        variant: "success",
+        description: "Login Successful",
+      });
+      router.push("/");
+      validateToken.refetch();
+    } else {
+      toast({
+        variant: "destructive",
+        description: res,
+      });
       router.push("/login");
-    },
-  });
+    }
+  };
 
   const onClickGoogleLogin = (state?: string) =>
     loginWithGoogle({ state, client_id: GoogleLogin.google_client_id });
@@ -225,13 +152,9 @@ export function AuthContextProvider({
   const authObj = React.useMemo(
     () => ({
       reset,
-      setUserData,
       userData,
       logout,
-      login,
-      loginV2,
-      socialLogin,
-      signUp,
+      googleLogin,
       onClickGoogleLogin,
     }),
     [userData, logout]

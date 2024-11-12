@@ -6,6 +6,7 @@ export const validateTokenQuery = (enabled: boolean) => {
     queryKey: ["validate-token"],
     queryFn: validateToken,
     retry: false,
+    refetchInterval: 1000 * 60 * 5,
     enabled,
   });
 };

@@ -1,41 +1,5 @@
 import axios from "@/lib/axios";
-import {
-  LoginFormSchemaType,
-  SignUpFormSchemaType,
-  socialLoginPayloadType,
-  validateTokenType,
-} from "../types/auth.types";
-
-export const loginUser = async (data: LoginFormSchemaType) => {
-  const response = await axios.post<{ success: boolean }>(
-    "/api/v1/auth/login",
-    data
-  );
-  return response.data;
-};
-
-export const loginUserV2 = async (data: LoginFormSchemaType) => {
-  const response = await axios.post<{ success: boolean }>(
-    "/api/v1/auth/login/token/v2",
-    data
-  );
-  return response.data;
-};
-
-export const loginUserRefreshV2 = async () => {
-  const response = await axios.post<{ success: boolean }>(
-    "/api/v1/auth/login/token/refresh/v2"
-  );
-  return response.data;
-};
-
-export const signup = async (data: SignUpFormSchemaType) => {
-  const response = await axios.post<{ success: boolean }>(
-    "/api/v1/auth/sign-up",
-    data
-  );
-  return response.data;
-};
+import { socialLoginPayloadType, validateTokenType } from "../types/auth.types";
 
 export const logoutUser = async () => {
   const response = await axios.post<{ success: boolean }>(
@@ -47,25 +11,6 @@ export const logoutUser = async () => {
 export const validateToken = async () => {
   const response = await axios.get<validateTokenType>(
     "/api/v1/auth/validate-token"
-  );
-  return response.data;
-};
-
-export const socialTokenLogin = async (data: socialLoginPayloadType) => {
-  const response = await axios.post<{ success: boolean }>(
-    "/api/v1/auth/login/token/convert/social-token/v2",
-    {
-      grant_type: "convert_token",
-      backend: "google-oauth2",
-      ...data,
-    }
-  );
-  return response.data;
-};
-
-export const socialTokenRefresh = async () => {
-  const response = await axios.post<{ success: boolean }>(
-    "/api/v1/auth/login/token/refresh/social-token/v2"
   );
   return response.data;
 };
@@ -98,3 +43,24 @@ export function loginWithGoogle({
   // Redirect the user to Google's OAuth 2.0 endpoint
   window.location.href = authUrl;
 }
+
+export const socialTokenLogin = async (data: socialLoginPayloadType) => {
+  const response = await axios.post<{ success: boolean }>(
+    "/api/v1/auth/login/token/convert/social-token/v2",
+    {
+      grant_type: "convert_token",
+      backend: "google-oauth2",
+      ...data,
+    }
+  );
+  return response.data;
+};
+
+export const refreshSession = async () => {
+  const response = await axios.post<{
+    success: boolean;
+    access_token: string;
+    refresh_token: string;
+  }>("api/v1/auth/login/token/combined-refresh-token/v2");
+  return response.data;
+};
