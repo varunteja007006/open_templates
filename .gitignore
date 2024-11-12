@@ -11,12 +11,11 @@ __pycache__
 db.sqlite3
 
 # custom
-Notes.txt
-Note.txt
-Rough.txt
-rough.txt
-notes.txt
-note.txt
+Rough.*
+rough.*
+notes.*
+note.*
+todo.*
 
 # vscode settings
 vscode
