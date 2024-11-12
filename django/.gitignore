@@ -173,29 +173,3 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/django
-
-
-
-
-
-
-
-
-
-__pycache__
-.env
-.env/*
-db.sqlite3
-
-# custom
-Notes.txt
-Note.txt
-Rough.txt
-rough.txt
-notes.txt
-note.txt
-
-# git and vscode
-vscode
-.vscode
-.git
