@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx index.ts",
+    "dev": "nodemon --exec tsx index.ts",
     "db:dev": "tsx src/index.ts",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
@@ -18,15 +18,20 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^8.14.0",
     "@typescript-eslint/parser": "^8.14.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.36.3",
     "drizzle-zod": "^0.5.1",
     "eslint-plugin-drizzle": "^0.2.3",
     "express": "^4.21.1",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.1",
+    "nodemon": "^3.1.7",
     "pg": "^8.13.1",
     "tsx": "^4.19.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/pg": "^8.11.10",
     "drizzle-kit": "^0.28.1",
