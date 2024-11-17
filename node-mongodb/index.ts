@@ -21,8 +21,8 @@ mongoose
   })
   .then(() => {
     console.log("connected to MongoDB");
-    app.listen(process.env.EXPRESS_PORT ?? 4000, () => {
-      console.log("Running on port : ", process.env.EXPRESS_PORT ?? 4000);
+    app.listen(process.env.EXPRESS_PORT ?? 4040, () => {
+      console.log("Running on port : ", process.env.EXPRESS_PORT ?? 4040);
     });
   })
   .catch((error) => {
