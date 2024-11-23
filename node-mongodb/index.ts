@@ -4,12 +4,15 @@ import mongoose from "mongoose";
 import cors from "cors";
 
 import FeedbackRouter from "@/api/feedback/routes";
+import logger from "@/middleware/logger/logger";
 
 const app = express();
 
 app.use(express.json());
 
 app.use(cors());
+
+app.use(logger);
 
 //Add routes
 app.use("/api/feedback", FeedbackRouter);
