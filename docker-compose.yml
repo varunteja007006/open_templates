@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   backend:
     build:
@@ -6,11 +8,30 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./django:/app # Maps code for live updates
+      - ./django:/app
+      - django_static:/app/static
+      - django_media:/app/media
     env_file:
       - ./django/.env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SETTINGS_MODULE=core.settings
     networks:
       - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+        reservations:
+          cpus: "0.25"
+          memory: 512M
 
   frontend:
     build:
@@ -19,15 +40,99 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     volumes:
-      - ./nextjs:/app # Maps code for live updates
-      - /app/node_modules # Maps code for live updates
-      - /app/.next # Maps code for live updates
+      - ./nextjs:/app
+      - /app/node_modules
+      - /app/.next
+      - next_build:/app/.next
     env_file:
       - ./nextjs/.env
+    environment:
+      - NODE_ENV=development
     networks:
       - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+        reservations:
+          cpus: "0.25"
+          memory: 512M
+
+  node-mongodb-api:
+    build:
+      context: ./node-mongodb
+      dockerfile: Dockerfile
+    ports:
+      - "4040:4040"
+    volumes:
+      - ./node-mongodb:/app
+      - /app/node_modules
+    env_file:
+      - ./node-mongodb/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4040/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+  node-postgres-api:
+    build:
+      context: ./node-postgres
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./node-postgres:/app
+      - /app/node_modules
+    env_file:
+      - ./node-postgres/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+volumes:
+  django_static:
+  django_media:
+  next_build:
 
 networks:
   app-network:
+    driver: bridge
