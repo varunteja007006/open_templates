@@ -159,3 +159,10 @@ https://pdipesh.medium.com/django-rest-framework-permissions-example-8ed9809c432
 https://dev.to/forhadakhan/multi-role-user-authentication-in-django-rest-framework-3nip
 
 https://medium.com/@subhamx/role-based-access-control-in-django-the-right-features-to-the-right-users-9e93feb8a3b1
+
+### PORTS
+
+django - 8000
+nextjs - 3000
+node-mongodb - 4040
+node-postgres - 4000
