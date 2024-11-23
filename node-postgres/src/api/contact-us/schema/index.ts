@@ -1,14 +1,7 @@
-import {
-  boolean,
-  integer,
-  pgTable,
-  timestamp,
-  unique,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { integer, pgTable, unique, varchar } from "drizzle-orm/pg-core";
 
-export const authUser = pgTable(
-  "auth_user",
+export const contactUs = pgTable(
+  "contact_us",
   {
     id: integer("id").primaryKey().notNull().generatedByDefaultAsIdentity({
       name: "null",
@@ -18,26 +11,14 @@ export const authUser = pgTable(
       maxValue: undefined,
       cache: undefined,
     }),
-    password: varchar("password", { length: 128 }).notNull(),
-    lastLogin: timestamp("last_login", { withTimezone: true, mode: "string" }),
-    isSuperuser: boolean("is_superuser").notNull(),
-    username: varchar("username", { length: 150 }).notNull(),
-    firstName: varchar("first_name", { length: 150 }).notNull(),
-    lastName: varchar("last_name", { length: 150 }).notNull(),
-    email: varchar("email", { length: 254 }).notNull(),
-    isStaff: boolean("is_staff").notNull(),
-    isActive: boolean("is_active").notNull(),
-    dateJoined: timestamp("date_joined", {
-      withTimezone: true,
-      mode: "string",
-    }).notNull(),
+    name: varchar("name", { length: 255 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
+    message: varchar("message", { length: 255 }).notNull(),
   },
   (table) => {
     return [
       {
-        authUserUsernameKey: unique("auth_user_username_key").on(
-          table.username
-        ),
+        contactUsPkey: unique("contact_us_pkey").on(table.id),
       },
     ];
   }
