@@ -9,7 +9,9 @@
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "build": "tsc",
+    "start": "node build/index.js"
   },
   "author": "",
   "license": "ISC",

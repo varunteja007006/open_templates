@@ -1,1 +1,1 @@
-GET http://localhost:5000/api/ HTTP/1.1
+GET http://localhost:5000/api/health-check/ HTTP/1.1
