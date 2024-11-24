@@ -8,6 +8,7 @@ import cors from "cors";
 
 import logger from "@/middleware/logger/logger";
 import onConnection from "./connections";
+import socketLogger from "@/middleware/socket-logger/socket-logger";
 
 const app = express();
 
@@ -29,6 +30,9 @@ const io = new Server(httpServer, {
     credentials: true,
   },
 });
+
+// middleware
+io.use(socketLogger);
 
 io.on("connection", onConnection);
 
