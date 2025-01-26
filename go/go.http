@@ -1,5 +1,5 @@
-### To test the server
-http://localhost:4040
+### To check the server health 
+http://localhost:4040/health
 
 ### To create an order
 POST http://localhost:4040/orders HTTP/1.1

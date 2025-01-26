@@ -15,7 +15,7 @@ func (a *App) loadRoutes() {
 
 	router.Use(middleware.Logger)
 
-	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	router.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("OK, API is alive"))
 	})

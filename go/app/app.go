@@ -12,12 +12,13 @@ import (
 type App struct {
 	router http.Handler
 	rdb    *redis.Client
+	config Config
 }
 
-func New() *App {
+func New(config Config) *App {
 	app := &App{
 		rdb: redis.NewClient(&redis.Options{
-			Addr:     "localhost:6379",
+			Addr:     config.RedisAddress,
 			Password: "", // no password (default)
 			DB:       0,  // use default DB
 		}),
@@ -30,9 +31,12 @@ func New() *App {
 
 func (a *App) Start(ctx context.Context) error {
 	server := &http.Server{
-		Addr:    ":4040",
+		Addr: fmt.Sprintf(":%d", 4040),
+		// Addr:    fmt.Sprintf(":%d", a.config.ServerPort ), // Bug need to fix
 		Handler: a.router,
 	}
+
+	fmt.Println("Listening on", server.Addr)
 
 	err := a.rdb.Ping(ctx).Err()
 	if err != nil {
