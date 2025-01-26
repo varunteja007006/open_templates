@@ -1,0 +1,29 @@
+### To test the server
+http://localhost:4040
+
+### To create an order
+POST http://localhost:4040/orders HTTP/1.1
+content-type: application/json
+
+{
+    "orderName": "Varun"
+}
+
+### To update an order by ID
+PUT http://localhost:4040/orders/1 HTTP/1.1
+content-type: application/json
+
+{
+    "orderName": "Varun"
+}
+
+### To delete an order by ID
+DELETE http://localhost:4040/orders/1 HTTP/1.1
+content-type: application/json
+
+### To get list of orders
+http://localhost:4040/orders 
+
+
+### To get order by ID
+http://localhost:4040/orders/2
