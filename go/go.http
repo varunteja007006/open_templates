@@ -6,7 +6,14 @@ POST http://localhost:4040/orders HTTP/1.1
 content-type: application/json
 
 {
-    "orderName": "Varun"
+    "customer_id": 123,
+    "line_items": [
+        {
+            "product_id": 321,
+            "quantity": 1,
+            "price": 100
+        }
+    ]
 }
 
 ### To update an order by ID
@@ -18,7 +25,7 @@ content-type: application/json
 }
 
 ### To delete an order by ID
-DELETE http://localhost:4040/orders/1 HTTP/1.1
+DELETE http://localhost:4040/orders/14505803571590362308 HTTP/1.1
 content-type: application/json
 
 ### To get list of orders
@@ -26,4 +33,4 @@ http://localhost:4040/orders
 
 
 ### To get order by ID
-http://localhost:4040/orders/2
+http://localhost:4040/orders/1906957252872492164
