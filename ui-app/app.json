@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ui",
-    "slug": "ui",
+    "name": "ui-app",
+    "slug": "ui-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
