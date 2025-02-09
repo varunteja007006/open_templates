@@ -162,7 +162,18 @@ https://medium.com/@subhamx/role-based-access-control-in-django-the-right-featur
 
 ### PORTS
 
-django - 8000
-nextjs - 3000
-node-mongodb - 4040
-node-postgres - 4000
+- django - 8000
+
+- nextjs - 3000
+
+- go-backend - 4030
+
+- node-mongodb - 4040
+
+- json-db - 4050
+
+- node-postgres - 4000
+
+- node-socket - 5000
+
+- ui-app (Mobile App) - 8081
