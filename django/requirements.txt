@@ -39,6 +39,7 @@ pillow==10.4.0
 platformdirs==4.3.6
 prompt_toolkit==3.0.48
 psutil==6.0.0
+psycopg==3.2.4
 ptyprocess==0.7.0
 pure_eval==0.2.3
 pycparser==2.22
@@ -52,6 +53,7 @@ pyzmq==26.2.0
 regex==2024.9.11
 requests==2.32.3
 requests-oauthlib==2.0.0
+setuptools==75.8.0
 six==1.16.0
 social-auth-app-django==5.4.2
 social-auth-core==4.5.4

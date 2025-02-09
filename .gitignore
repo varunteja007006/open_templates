@@ -23,3 +23,5 @@ vscode
 
 # git
 .git
+
+.venv
