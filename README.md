@@ -192,10 +192,12 @@ https://angular.dev/
 
 ### Few styling & component libraries
 
-- https://www.nativewind.dev
+- https://www.nativewind.dev **(using)**
 
 - https://nativewindui.com
 
 - https://gluestack.io/ui
 
 - https://github.com/mrzachnugent/react-native-reusables
+
+- https://rnr-docs.vercel.app/getting-started/introduction/ **(using)**
