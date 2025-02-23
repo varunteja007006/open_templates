@@ -160,7 +160,7 @@ https://dev.to/forhadakhan/multi-role-user-authentication-in-django-rest-framewo
 
 https://medium.com/@subhamx/role-based-access-control-in-django-the-right-features-to-the-right-users-9e93feb8a3b1
 
-### PORTS
+## PORTS
 
 - django - 8000
 
@@ -177,3 +177,25 @@ https://medium.com/@subhamx/role-based-access-control-in-django-the-right-featur
 - node-socket - 5000
 
 - ui-app (Mobile App) - 8081
+
+## Frontend Frameworks
+
+Alternate frontend frameworks to experiment with
+
+**Vue JS**
+https://nuxt.com/
+
+**Angular**
+https://angular.dev/
+
+## Mobile App Development (Expo)
+
+### Few styling & component libraries
+
+- https://www.nativewind.dev
+
+- https://nativewindui.com
+
+- https://gluestack.io/ui
+
+- https://github.com/mrzachnugent/react-native-reusables

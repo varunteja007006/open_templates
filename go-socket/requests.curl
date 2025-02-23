@@ -1,0 +1,5 @@
+curl -i --header "Upgrade: websocket" \
+--header "Connection: Upgrade" \
+--header "Sec-WebSocket-Key: YSBzYW1wbGUgMTYgYnl0ZQ==" \
+--header "Sec-Websocket-Version: 13" \
+localhost:8080
