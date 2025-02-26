@@ -201,3 +201,102 @@ https://angular.dev/
 - https://github.com/mrzachnugent/react-native-reusables
 
 - https://rnr-docs.vercel.app/getting-started/introduction/ **(using)**
+
+- React Native Paper - https://callstack.github.io/react-native-paper/
+
+- React Native Sheet - https://rnas.vercel.app/
+
+# Go
+
+Install GO
+
+### initialize the project
+
+Eg: go mod init github.com/varunteja007006/open_templates
+
+### Run the file
+
+```sh
+go run file_name.go
+```
+
+### Build the file
+
+```sh
+go build -o file_name file_name.go
+```
+
+## Building web server with go
+
+GET "order:3136027566058651130"
+"{\"order_id\":3136027566058651130,\"customer_id\":123,\"line_items\":[{\"product_id\":321,\"quantity\":1,\"price\":100}],\"created_at\":\"2025-01-26T21:45:09.198061722+05:30\",\"shipped_at\":null,\"completed_at\":null}"
+
+# Go Socket
+
+# json-db
+
+This is a json server for the purpose of learning json-server. It stores the data in a json file.
+
+## Usage
+
+Install the packages
+
+```bash
+npm i
+```
+
+Run the server
+
+```bash
+npm run dev
+```
+
+## Test the requests
+
+Install https://github.com/Huachao/vscode-restclient extension in vscode
+
+Open the db.http file
+
+You can start making the requests.
+
+# nextjs
+
+### UI libraries
+
+https://headlessui.com/
+
+### Components libraries
+
+https://originui.com/
+
+https://shadcn-extension.vercel.app/docs/smart-datetime-input
+
+### Blogs
+
+Some blogs I refer for help with developing UI
+
+https://jidefr.medium.com/shadcn-ui-add-components-and-resources-0846b0f57596
+
+# node-mongodb
+
+https://mongoosejs.com/docs/index.html
+
+# node-postgres
+
+https://orm.drizzle.team/
+
+https://orm.drizzle.team/docs/get-started-postgresql
+
+# Node Socket Connections
+
+https://socket.io/docs/v4/server-application-structure/
+
+https://github.com/TomDoesTech/chat-tutorial
+
+<!-- import { io } from "socket.io-client";
+const socket = io("https://api.example.com", {
+  withCredentials: true,
+  extraHeaders: {
+    "my-custom-header": "abcd"
+  }
+}); -->
