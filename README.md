@@ -300,3 +300,11 @@ const socket = io("https://api.example.com", {
     "my-custom-header": "abcd"
   }
 }); -->
+
+# Django
+
+### Blogs
+
+Some cool blogs I am going through as I build and learn django
+
+https://builtwithdjango.com/blog/reusable-models
