@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-
+from .views import HealthCheckView
 # Schema view setup for Swagger and ReDoc
 schema_view = get_schema_view(
     openapi.Info(
@@ -23,6 +23,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("health/", HealthCheckView.as_view()),
     # User Management APIs
     path("api/v1/user_management/", include("user_management.urls")),
     # Authentication APIs

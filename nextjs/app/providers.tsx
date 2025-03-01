@@ -1,5 +1,5 @@
 "use client";
-
+import { scan } from "react-scan"; // import this BEFORE react
 import * as React from "react";
 
 import { ThemeProvider } from "next-themes";
@@ -10,6 +10,12 @@ import {
   AuthContextProvider,
   TypeGoogleLoginClientID,
 } from "@/features/auth/context/auth.context";
+
+if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_ENV === "DEV") {
+  scan({
+    enabled: true,
+  });
+}
 
 // Create a client
 const queryClient = new QueryClient();
