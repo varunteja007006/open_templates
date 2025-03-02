@@ -308,3 +308,11 @@ const socket = io("https://api.example.com", {
 Some cool blogs I am going through as I build and learn django
 
 https://builtwithdjango.com/blog/reusable-models
+
+### All Auth
+
+https://docs.allauth.org/en/dev/headless/api.html
+
+https://docs.allauth.org/en/dev/headless/openapi-specification/#section/Responses
+
+https://codeberg.org/allauth/django-allauth/src/branch/main/examples/react-spa
