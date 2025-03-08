@@ -1,10 +1,8 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 
-import { cn } from "@/lib/utils";
-
+import { ModeToggle } from "@/components/theme-toggle";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,10 +12,11 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
-import UserNavbar from "./user-navbar";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 import IconBadge from "../IconBadge";
+import UserLogin from "@/components/auth/components/UserLogin";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -59,27 +58,26 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function NavigationMenuComp() {
   return (
-    <div className="flex w-full dark:bg-black bg-white px-4 md:px-8 py-4 dark:text-neutral-200 justify-between items-center relative">
+    <div className="flex relative justify-between items-center px-4 py-4 w-full bg-white dark:bg-black md:px-8 dark:text-neutral-200">
       <IconBadge />
-      <NavigationMenu className="hidden md:flex">
+      <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                 <li className="row-span-3">
                   <NavigationMenuLink asChild>
                     <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                      className="flex flex-col justify-end p-6 w-full h-full no-underline bg-gradient-to-b rounded-md outline-none select-none from-muted/50 to-muted focus:shadow-md"
                       href="/"
                     >
-                      <div className="mb-2 mt-4 text-lg font-medium">
+                      <div className="mt-4 mb-2 text-lg font-medium">
                         shadcn/ui
                       </div>
                       <p className="text-sm leading-tight text-muted-foreground">
-                        Beautifully designed components that you can copy and
-                        paste into your apps. Accessible. Customizable. Open
-                        Source.
+                        Beautifully designed components built with Radix UI and
+                        Tailwind CSS.
                       </p>
                     </a>
                   </NavigationMenuLink>
@@ -99,28 +97,21 @@ export function NavigationMenuComp() {
           <NavigationMenuItem>
             <NavigationMenuTrigger>Components</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ScrollArea className="h-[200px] rounded-md">
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                  {components.map((component) => (
-                    <ListItem
-                      key={component.title}
-                      title={component.title}
-                      href={component.href}
-                    >
-                      {component.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </ScrollArea>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                {components.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link
-              href="https://ui.shadcn.com/docs"
-              target="_blank"
-              legacyBehavior
-              passHref
-            >
+            <Link href="/docs" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Documentation
               </NavigationMenuLink>
@@ -128,7 +119,10 @@ export function NavigationMenuComp() {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <UserNavbar />
+      <div className="flex gap-5 items-center">
+        <UserLogin />
+        <ModeToggle />
+      </div>
     </div>
   );
 }
@@ -143,13 +137,13 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-neutral-900 dark:focus:bg-neutral-900",
+            "block p-3 space-y-1 leading-none no-underline rounded-md transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <p className="text-sm leading-snug line-clamp-2 text-muted-foreground">
             {children}
           </p>
         </a>

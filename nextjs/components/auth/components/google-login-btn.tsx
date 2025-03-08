@@ -15,7 +15,7 @@ export default function GoogleLogin({
   state?: string;
 }) {
   return (
-    <div className="p-2 md:pl-3 md:pr-0 h-full border-l dark:border-none">
+    <div className="p-2 h-full border-l md:pl-3 md:pr-0 dark:border-none">
       <MyTooltip text={"Sign in with Google"}>
         <Button
           type="button"

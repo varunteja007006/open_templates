@@ -30,7 +30,8 @@ export function AuthContextProvider({
   const logout = React.useCallback(() => {
     // clear storage if needed
     sessionStorage.clear();
-
+    setIsAuthenticated(false);
+    setUser(null);
     // redirect to login
     router.push("/login");
   }, []);
@@ -38,8 +39,12 @@ export function AuthContextProvider({
   const { data: validateToken } = useValidateToken();
 
   React.useEffect(() => {
-    if (validateToken) {
+    if (!validateToken) return;
+    if (validateToken.isAuthenticated) {
       setIsAuthenticated(validateToken.isAuthenticated);
+      setUser(validateToken.user);
+    } else {
+      logout();
     }
   }, [validateToken]);
 

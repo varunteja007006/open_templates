@@ -27,22 +27,23 @@ def logout_view(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def google_login_view(request):
+def oauth_login_view(request):
     """
-    This view handles the Google OAuth token and converts it to a user object
+    This view handles the OAuth token and converts it to a user object
     """
     
     User = get_user_model()
-    google_token = request.data.get('token')
+    auth_token = request.data.get('token')
+    provider = request.data.get('provider')
     
-    if not google_token:
+    if not auth_token:
         return Response({"error": "Token is required"}, status=400)
     
     try:
         # Directly verify the token with Google
         response = requests.get(
             'https://www.googleapis.com/oauth2/v3/userinfo',
-            headers={'Authorization': f'Bearer {google_token}'}
+            headers={'Authorization': f'Bearer {auth_token}'}
         )
         
         if response.status_code != 200:
@@ -161,7 +162,10 @@ def validate_token_view(request):
         # or through auto-refresh in CombinedCookieAuthentication
         data = {"user": {
             "email": request.user.email,
-            "full_name": request.user.get_full_name(),
+            "first_name": request.user.first_name,
+            "last_name": request.user.last_name,
+            "id": request.user.id,
+            "username": request.user.username
         },
             "isAuthenticated": True,
         }
@@ -191,7 +195,10 @@ def validate_token_view(request):
             data = {
                 "user": {
                     "email": user.email,
-                    "full_name": user.get_full_name(),
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "id": user.id,
+                    "username": user.username
                 },
                 "isAuthenticated": True,
             }

@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleLogin from "@/components/auth/components/login/google-login-btn";
+import GoogleLogin from "@/components/auth/components/google-login-btn";
 
 export default function Page() {
   const google_client_id = process.env.GOOGLE_CLIENT_ID ?? "";

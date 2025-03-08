@@ -3,7 +3,7 @@ import React from "react";
 import { useLogin, TLoginResponse } from "@/components/auth/api/auth.query";
 import { useAuthContext } from "@/components/auth/context/auth.context";
 
-export default function LoginOAuth({ provider }: { provider?: string }) {
+export default function LoginOAuth({ provider }: { provider: string }) {
   const { setIsAuthenticated, setUser } = useAuthContext();
   const loginDone = React.useRef<boolean>(false);
 
@@ -27,7 +27,7 @@ export default function LoginOAuth({ provider }: { provider?: string }) {
   React.useEffect(() => {
     if (accessToken && !loginDone.current) {
       // make a call to db to store the token
-      login.mutate({ token: accessToken });
+      login.mutate({ token: accessToken, provider: provider ?? "" });
       loginDone.current = true;
     }
   }, [accessToken]);
