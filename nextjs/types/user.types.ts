@@ -1,10 +1,7 @@
-export type User = {
-  email: string;
-  full_name: string;
-  isAuthenticated: boolean;
-};
-
-export type UserLoginPayload = {
+export type TUser = {
+  id: number;
   username: string;
-  password: string;
+  email: string;
+  first_name: string;
+  last_name: string;
 };

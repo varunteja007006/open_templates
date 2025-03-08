@@ -15,7 +15,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Input, InputProps } from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -60,15 +60,16 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   );
 PhoneInput.displayName = "PhoneInput";
 
-const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, ...props }, ref) => (
-    <Input
-      className={cn("rounded-e-lg rounded-s-none", className)}
-      {...props}
-      ref={ref}
-    />
-  )
-);
+const InputComponent = React.forwardRef<
+  HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement>
+>(({ className, ...props }, ref) => (
+  <Input
+    className={cn("rounded-e-lg rounded-s-none", className)}
+    {...props}
+    ref={ref}
+  />
+));
 InputComponent.displayName = "InputComponent";
 
 type CountrySelectOption = { label: string; value: RPNInput.Country };
@@ -113,9 +114,9 @@ const CountrySelect = ({
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0">
         <Command>
+          <CommandInput placeholder="Search country..." />
           <CommandList>
             <ScrollArea className="h-72">
-              <CommandInput placeholder="Search country..." />
               <CommandEmpty>No country found.</CommandEmpty>
               <CommandGroup>
                 {options

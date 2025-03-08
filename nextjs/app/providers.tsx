@@ -1,44 +1,24 @@
 "use client";
-import { scan } from "react-scan"; // import this BEFORE react
-import * as React from "react";
+import React from "react";
 
-import { ThemeProvider } from "next-themes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { QueryClient, QueryClientProvider } from "react-query";
+import { ThemeProvider } from "@/components/theme-provider";
+import { AuthContextProvider } from "@/components/auth/context/auth.context";
 
-import {
-  AuthContextProvider,
-  TypeGoogleLoginClientID,
-} from "@/features/auth/context/auth.context";
-
-if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_ENV === "DEV") {
-  scan({
-    enabled: true,
-  });
-}
-
-// Create a client
 const queryClient = new QueryClient();
 
-export default function Provider({
-  children,
-  GoogleLogin,
-}: Readonly<{
-  children: React.ReactNode;
-  GoogleLogin: TypeGoogleLoginClientID;
-}>) {
+export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider GoogleLogin={GoogleLogin}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </AuthContextProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <AuthContextProvider>{children}</AuthContextProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

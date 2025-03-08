@@ -1,3 +1,3 @@
-export const LOGIN_ROUTES = ["/login", "/sign-in", "/login/login-via-google"];
+export const LOGIN_ROUTES = ["/login", "/login/oauth"];
 
-export const UNPROTECTED_ROUTES = [...LOGIN_ROUTES, "/", "/socket-demo"];
+export const UNPROTECTED_ROUTES = [...LOGIN_ROUTES, "/"];

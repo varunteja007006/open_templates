@@ -1,31 +1,47 @@
+import { TUser } from "@/types/user.types";
 import { StateCreator } from "zustand";
 
-type UserState = {
-  full_name: string;
-  email: string;
+type TUserState = TUser & {
   isAuthenticated: boolean;
 };
 
-type UserActions = {
+type TUserActions = {
+  setUserStore: (user: TUser) => void;
   logoutUserStore: () => void;
 };
 
-export type UserSlice = UserState & UserActions;
+export type userSlice = TUserState & TUserActions;
 
 export const createUserSlice: StateCreator<
-  UserSlice,
+  userSlice,
   [["zustand/immer", never]],
   [],
-  UserSlice
+  userSlice
 > = (set) => ({
+  id: 0,
+  username: "",
   email: "",
-  full_name: "",
+  first_name: "",
+  last_name: "",
   isAuthenticated: false,
   logoutUserStore: () => {
     set((state) => {
+      state.id = 0;
+      state.username = "";
       state.email = "";
-      state.full_name = "";
+      state.first_name = "";
+      state.last_name = "";
       state.isAuthenticated = false;
+    });
+  },
+  setUserStore: (user) => {
+    set((state) => {
+      state.id = user.id;
+      state.username = user.username;
+      state.email = user.email;
+      state.first_name = user.first_name;
+      state.last_name = user.last_name;
+      state.isAuthenticated = true;
     });
   },
 });

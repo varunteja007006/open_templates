@@ -1,34 +1,38 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
+from .views import HealthCheckView
 from django.conf import settings
 from django.conf.urls.static import static
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from .views import HealthCheckView
+
 # Schema view setup for Swagger and ReDoc
 schema_view = get_schema_view(
     openapi.Info(
-        title="Flare",
+        title="Backend",
         default_version="v1",
-        description="API documentation for Flare ERP CRM system",
-        #   terms_of_service="https://www.example.com/terms/",
-        #   contact=openapi.Contact(email="contact@example.com"),
-        #   license=openapi.License(name="BSD License"),
+        description="API documentation for backend",
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    # admin urls
+    path('admin/', admin.site.urls),
+    
+    # health check endpoint
     path("health/", HealthCheckView.as_view()),
-    # User Management APIs
-    path("api/v1/user_management/", include("user_management.urls")),
-    # Authentication APIs
-    path("api/v1/auth/", include("login.urls")),
-    re_path(r"^auth/", include("drf_social_oauth2.urls", namespace="drf")),
+
+    # allauth urls
+    path('accounts/', include('allauth.urls')),
+    path("_allauth/", include("allauth.headless.urls")),
+
+    # api urls
+    path("api/", include("api.urls")),
+
     # Swagger and ReDoc documentation URLs
     re_path(
         r"^swagger(?P<format>\.json|\.yaml)$",

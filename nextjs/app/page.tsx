@@ -1,5 +1,3 @@
-import Home from "@/features/home/components/home/Home";
-
-export default function HomePage() {
-  return <Home />;
+export default function Home() {
+  return <>Hello</>;
 }
