@@ -11,11 +11,7 @@ from allauth.socialaccount.models import SocialAccount
 from allauth.account.models import EmailAddress
 from rest_framework_simplejwt.tokens import RefreshToken
 
-IS_HTTP_ONLY = True
-IS_SECURE = True
-IS_SAME_SITE = "None"
-ACCESS_TOKEN_AGE=60*5 # 5 minutes
-REFRESH_TOKEN_AGE=60*60*24*7 # 7 days
+from django.conf import settings
 
 @api_view(['GET'])
 def login_view(request):
@@ -111,12 +107,8 @@ def google_login_view(request):
                 )
         
         # Generate authentication token
-        token, created = Token.objects.get_or_create(user=user)
         refresh = RefreshToken.for_user(user)
 
-        # Generate refresh token if you need one
-        refresh_token = None  # Replace with your refresh token logic if needed
-        
         # Create response
         response = Response({
             'message': 'Login successful',
@@ -132,18 +124,18 @@ def google_login_view(request):
         # Set cookies
         response.set_cookie(
             'access_token', str(refresh.access_token), 
-            max_age=ACCESS_TOKEN_AGE,  
-            httponly=IS_HTTP_ONLY, 
-            secure=IS_SECURE, 
-            samesite=IS_SAME_SITE
+            max_age=settings.ACCESS_TOKEN_AGE,  
+            httponly=settings.IS_HTTP_ONLY, 
+            secure=settings.IS_SECURE, 
+            samesite=settings.IS_SAME_SITE
         )
         
         response.set_cookie(
             'refresh_token', str(refresh), 
-            max_age=REFRESH_TOKEN_AGE,
-            httponly=IS_HTTP_ONLY, 
-            secure=IS_SECURE, 
-            samesite=IS_SAME_SITE
+            max_age=settings.REFRESH_TOKEN_AGE,
+            httponly=settings.IS_HTTP_ONLY, 
+            secure=settings.IS_SECURE, 
+            samesite=settings.IS_SAME_SITE
         )
         
         return response
@@ -160,13 +152,73 @@ def test_token_view(request):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def validate_token_view(request):
+    """
+    Validates user authentication and returns user data.
+    If access token expired but refresh token valid, new access token is generated.
+    """
     if request.user.is_authenticated:
-        user_data = {
+        # User is authenticated - either with original access token
+        # or through auto-refresh in CombinedCookieAuthentication
+        data = {"user": {
             "email": request.user.email,
             "full_name": request.user.get_full_name(),
-            "isAuthenticated": request.user.is_authenticated,
+        },
+            "isAuthenticated": True,
         }
-        return Response(user_data, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
     else:
-        return Response({'message': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)    
-
+        # If user not authenticated via access token, try refresh token directly
+        refresh_token = request.COOKIES.get('refresh_token')
+        
+        if not refresh_token:
+            return Response(
+                {'message': 'User not authenticated', 'isAuthenticated': False}, 
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+        
+        try:
+            # Validate refresh token and generate new tokens
+            refresh = RefreshToken(refresh_token)
+            user_id = refresh.payload.get('user_id')
+            
+            User = get_user_model()
+            user = User.objects.get(pk=user_id)
+            
+            # Create new tokens
+            new_refresh = RefreshToken.for_user(user)
+            
+            # Prepare response with user data
+            data = {
+                "user": {
+                    "email": user.email,
+                    "full_name": user.get_full_name(),
+                },
+                "isAuthenticated": True,
+            }
+            
+            response = Response(data, status=status.HTTP_200_OK)
+            
+            # Set new tokens in cookies
+            response.set_cookie(
+                'access_token', str(new_refresh.access_token),
+                max_age=settings.ACCESS_TOKEN_AGE,
+                httponly=settings.IS_HTTP_ONLY,
+                secure=settings.IS_SECURE,
+                samesite=settings.IS_SAME_SITE
+            )
+            
+            response.set_cookie(
+                'refresh_token', str(new_refresh),
+                max_age=settings.REFRESH_TOKEN_AGE,
+                httponly=settings.IS_HTTP_ONLY,
+                secure=settings.IS_SECURE,
+                samesite=settings.IS_SAME_SITE
+            )
+            
+            return response
+            
+        except (TokenError, InvalidToken, User.DoesNotExist):
+            return Response(
+                {'message': 'Invalid or expired refresh token', 'isAuthenticated': False}, 
+                status=status.HTTP_401_UNAUTHORIZED
+            )

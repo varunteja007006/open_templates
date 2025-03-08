@@ -11,13 +11,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.timezone import timedelta
 import environ
 import os
 
 
 env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
+    DEBUG=(bool, False) # set casting, default value
 )
 
 
@@ -40,7 +40,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -64,7 +63,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
-
 
 MIDDLEWARE = [
     # cors
@@ -118,15 +116,6 @@ DATABASES = {
         "PORT": env("POSTGRES_PORT"),
     }
 }
-
-# Default SQLite
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -187,24 +176,6 @@ AUTHENTICATION_BACKENDS = [
 
 
 # Provider specific settings
-# SOCIALACCOUNT_PROVIDERS = {
-#     'google': {
-#         'APP': {
-#             'client_id': env('GOOGLE_OAUTH2_CLIENT_ID'),
-#             'secret': env('GOOGLE_OAUTH2_SECRET'),
-#             'key': env('GOOGLE_OAUTH2_KEY'),
-#             "settings": {
-#                     # You can fine tune these settings per app:
-#                     "scope": [
-#                         "profile",
-#                         "email",
-#                     ],
-#                 },
-#         }
-#     }
-# }
-
-
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 
@@ -226,117 +197,61 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-HEADLESS_ONLY = True
-
-# These are the URLs to be implemented by your single-page application.
-HEADLESS_FRONTEND_URLS = {
-    "account_confirm_email": "https://app.project.org/account/verify-email/{key}",
-    "account_reset_password_from_key": "https://app.org/account/password/reset/key/{key}",
-    "account_signup": "https://app.org/account/signup",
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [  # if users are required to be authenticated
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_THROTTLE_CLASSES": [  # if user requests have to be throttled
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+        "rest_framework.throttling.ScopedRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {  # user requests to be throttled
+        "anon": "100/day",
+        "user": "50000/day",
+    },
+    "DEFAULT_AUTHENTICATION_CLASSES": (  # authentication classes
+        # custom auth classes
+        "login.authentication.CombinedCookieAuthentication",
+        # django packages
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
 }
 
-# AUTHENTICATION_BACKENDS = (
-#     # Google  OAuth2
-#     "social_core.backends.google.GoogleOAuth2",
-#     "drf_social_oauth2.backends.DjangoOAuth2",
-#     "django.contrib.auth.backends.ModelBackend",
-# )
 
-# # Google configuration
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env(
-#     "SOCIAL_AUTH_GOOGLE_OAUTH2_KEY"
-# )  # <your app id goes here>
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env(
-#     "SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET"
-# )  # <your app secret goes here>
+# Cookie settings
+IS_HTTP_ONLY = True
+IS_SECURE = True
+IS_SAME_SITE = "Lax"
+ACCESS_TOKEN_AGE=60*5 # 5 minutes
+REFRESH_TOKEN_AGE=60*60*24*7 # 7 days
 
-# # Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
-#     "https://www.googleapis.com/auth/userinfo.email",
-#     "https://www.googleapis.com/auth/userinfo.profile",
-# ]
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=ACCESS_TOKEN_AGE),
+    "REFRESH_TOKEN_LIFETIME": timedelta(seconds=REFRESH_TOKEN_AGE),
+    "AUTH_COOKIE": "access_token",  # Cookie name for the access token
+    "AUTH_COOKIE_REFRESH": "refresh_token",  # Cookie name for the refresh token
+    "AUTH_COOKIE_SECURE": True,  # Set to True if using HTTPS
+    "AUTH_COOKIE_HTTP_ONLY": True,  # Make the cookie HTTP only
+    "AUTH_COOKIE_PATH": "/",  # Root path for the cookie
+    "AUTH_COOKIE_SAMESITE": "Lax",  # Adjust according to your needs. This can be 'Lax', 'Strict', or None to disable the flag.
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+}
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_PERMISSION_CLASSES": [  # if users are required to be authenticated
-#         "rest_framework.permissions.IsAuthenticated",
-#     ],
-#     # "DEFAULT_THROTTLE_CLASSES": [  # if user requests have to be throttled
-#     #     "rest_framework.throttling.AnonRateThrottle",
-#     #     "rest_framework.throttling.UserRateThrottle",
-#     #     "rest_framework.throttling.ScopedRateThrottle",
-#     # ],
-#     # "DEFAULT_THROTTLE_RATES": {  # user requests to be throttled
-#     #     "anon": "100/day",
-#     #     "user": "1000/day",
-#     #     "profile-upload": "5/day",
-#     # },
-#     "DEFAULT_AUTHENTICATION_CLASSES": (  # authentication classes
-#         # custom auth classes
-#         "login.authentication.CombinedCookieAuthentication",
-#         #
-#         #
-#         "rest_framework_simplejwt.authentication.JWTAuthentication",
-#         "rest_framework.authentication.TokenAuthentication",
-#         "rest_framework.authentication.SessionAuthentication",
-#         #
-#         # OAuth
-#         #
-#         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",  # django-oauth-toolkit >= 1.0.0
-#         "drf_social_oauth2.authentication.SocialAuthentication",
-#     ),
-# }
+if DEBUG:
+    FRONTEND_WHITELIST = [
+        "http://localhost:3000",
+    ]
+else:
+    FRONTEND_WHITELIST = []
 
-# SIMPLE_JWT = {
-#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-#     "ROTATE_REFRESH_TOKENS": False,
-#     "BLACKLIST_AFTER_ROTATION": False,
-#     "UPDATE_LAST_LOGIN": False,
-#     "ALGORITHM": "HS256",
-#     "SIGNING_KEY": SECRET_KEY,
-#     "VERIFYING_KEY": "",
-#     "AUDIENCE": None,
-#     "ISSUER": None,
-#     "JSON_ENCODER": None,
-#     "JWK_URL": None,
-#     "LEEWAY": 0,
-#     "AUTH_HEADER_TYPES": ("Bearer",),
-#     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-#     "USER_ID_FIELD": "id",
-#     "USER_ID_CLAIM": "user_id",
-#     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-#     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-#     "TOKEN_TYPE_CLAIM": "token_type",
-#     "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-#     "JTI_CLAIM": "jti",
-#     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-#     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
-#     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
-#     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-#     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
-#     "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
-#     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
-#     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
-#     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
-#     "AUTH_COOKIE": "access_token",  # Cookie name for the access token
-#     "AUTH_COOKIE_REFRESH": "refresh_token",  # Cookie name for the refresh token
-#     "AUTH_COOKIE_DOMAIN": None,  # A string like "example.com", or None for standard domain cookie.
-#     "AUTH_COOKIE_SECURE": True,  # Set to True if using HTTPS
-#     "AUTH_COOKIE_HTTP_ONLY": True,  # Make the cookie HTTP only
-#     "AUTH_COOKIE_PATH": "/",  # Root path for the cookie
-#     "AUTH_COOKIE_SAMESITE": "Lax",  # Adjust according to your needs. This can be 'Lax', 'Strict', or None to disable the flag.
-# }
-
+# CORS
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-]
+CORS_ORIGIN_WHITELIST = FRONTEND_WHITELIST
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-
-
-
-
-
 

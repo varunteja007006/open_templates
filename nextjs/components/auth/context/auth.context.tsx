@@ -4,6 +4,7 @@ import * as React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { LOGIN_ROUTES, UNPROTECTED_ROUTES } from "@/constants/routes.constant";
 import { TUser } from "@/types/user.types";
+import { useValidateToken } from "@/components/auth/api/auth.query";
 
 type authContextType = {
   user: TUser | null;
@@ -33,6 +34,14 @@ export function AuthContextProvider({
     // redirect to login
     router.push("/login");
   }, []);
+
+  const { data: validateToken } = useValidateToken();
+
+  React.useEffect(() => {
+    if (validateToken) {
+      setIsAuthenticated(validateToken.isAuthenticated);
+    }
+  }, [validateToken]);
 
   React.useEffect(() => {
     if (pathname) {
