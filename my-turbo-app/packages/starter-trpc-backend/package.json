@@ -1,0 +1,38 @@
+{
+  "name": "@workspace/starter-trpc-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "drizzle:generate": "pnpm drizzle-kit generate",
+    "drizzle:migrate": "pnpm drizzle-kit migrate",
+    "drizzle:push": "pnpm drizzle-kit push",
+    "drizzle:pull": "pnpm drizzle-kit pull",
+    "drizzle:check": "pnpm drizzle-kit check",
+    "drizzle:up": "pnpm drizzle-kit up",
+    "drizzle:studio": "pnpm drizzle-kit studio",
+    "dev": "pnpm tsx index.ts"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "default": "./index.ts"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.4.1",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.6",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.5",
+    "drizzle-kit": "^0.31.5",
+    "tsx": "^4.20.6",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "^5.9.2"
+  }
+}
