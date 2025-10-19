@@ -3,15 +3,16 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as dbSchemas from "./src/schema";
 
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!DATABASE_URL) {
+  throw new Error("Unable to find the DB connection string");
+}
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL!,
+  connectionString: DATABASE_URL,
 });
 
 const db = drizzle({ client: pool, casing: "snake_case" });
-
-async function main() {
-  console.log("TESTING DB: F",await db.execute("SELECT 1"));
-}
-main();
 
 export { db, dbSchemas };
