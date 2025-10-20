@@ -2,7 +2,6 @@ import { db, dbSchema } from "@workspace/starter-trpc-backend";
 
 export default async function CheckDBConnection() {
   const res = await db.execute("select 'Hello World' as message");
-  const posts = await db.select().from(dbSchema.postTable);
   const users = await db
     .select({
       name: dbSchema.user.name,
@@ -12,7 +11,6 @@ export default async function CheckDBConnection() {
     
   return (
     <div className="text-sm font-mono space-y-2 bg-card rounded-lg shadow border">
-      <pre className="p-2">Drizzle Posts: {JSON.stringify(posts, null, 2)}</pre>
       <pre className="p-2">Drizzle Users: {JSON.stringify(users, null, 2)}</pre>
       <pre className="p-2">Drizzle output: {JSON.stringify(res.rows, null, 2)}</pre>
     </div>

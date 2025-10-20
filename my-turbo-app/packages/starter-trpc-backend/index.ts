@@ -1,3 +1,5 @@
-export { db, dbSchema } from "./src/db";
+export * from "./src/db";
 
-export { auth } from "./src/auth";
+export * from "./src/auth";
+
+export * from "./src/trpc"

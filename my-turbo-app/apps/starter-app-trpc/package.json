@@ -13,11 +13,17 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@tanstack/react-query": "^5.90.5",
+    "@trpc/client": "^11.6.0",
+    "@trpc/react-query": "^11.6.0",
+    "@trpc/server": "^11.6.0",
+    "@trpc/tanstack-react-query": "^11.6.0",
     "@workspace/starter-package": "workspace:*",
     "@workspace/starter-trpc-backend": "workspace:*",
     "@workspace/theme": "workspace:*",
     "@workspace/ui": "workspace:*",
     "better-auth": "^1.3.28",
+    "client-only": "^0.0.1",
     "lucide-react": "^0.475.0",
     "next": "^15.4.5",
     "next-themes": "^0.4.6",
@@ -25,7 +31,9 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.65.0",
+    "server-only": "^0.0.1",
     "sonner": "^2.0.7",
+    "superjson": "^2.2.2",
     "zod": "^3.25.76"
   },
   "devDependencies": {

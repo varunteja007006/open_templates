@@ -1,5 +1,14 @@
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@workspace/ui/components/tabs";
+
 import SignOutBtn from "@/components/organisms/sign-out-btn";
-import { SignUpCard } from "@/components/organisms/sign-up-card";
+import { SignUpForm } from "@/components/organisms/sign-up-form";
+import { SignInForm } from "@/components/organisms/sign-in-form";
+
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
@@ -10,10 +19,22 @@ export const SignUp = async () => {
 
   if (!session) {
     return (
-      <div>
-        <h2>Sign Up - Better Auth</h2>
-        <SignUpCard />
-      </div>
+      <Tabs defaultValue="sign-up" className="w-[400px]">
+        <TabsList>
+          <TabsTrigger value="sign-up">Sign Up</TabsTrigger>
+          <TabsTrigger value="sign-in">Sign In</TabsTrigger>
+        </TabsList>
+        <TabsContent value="sign-up">
+          <div className="p-4">
+            <SignUpForm />
+          </div>
+        </TabsContent>
+        <TabsContent value="sign-in">
+          <div className="p-4">
+            <SignInForm />
+          </div>
+        </TabsContent>
+      </Tabs>
     );
   }
 
