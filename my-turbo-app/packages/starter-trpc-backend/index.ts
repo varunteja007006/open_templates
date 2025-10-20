@@ -1,18 +1,3 @@
-import "dotenv/config";
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
-import * as dbSchemas from "./src/schema";
+export { db, dbSchema } from "./src/db";
 
-const DATABASE_URL = process.env.DATABASE_URL;
-
-if (!DATABASE_URL) {
-  throw new Error("Unable to find the DB connection string");
-}
-
-const pool = new Pool({
-  connectionString: DATABASE_URL,
-});
-
-const db = drizzle({ client: pool, casing: "snake_case" });
-
-export { db, dbSchemas };
+export { auth } from "./src/auth";
