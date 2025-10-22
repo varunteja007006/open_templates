@@ -6,6 +6,17 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
+    "starter-convex:dev": "pnpm --filter=starter-convex dev",
+    "starter-app-convex:dev": "pnpm --filter=starter-app-convex dev",
+    "starter-app-trpc:dev": "pnpm --filter=starter-app-trpc dev",
+    "starter-app:dev": "pnpm --filter=starter-app dev",
+    "starter-convex:build": "pnpm --filter=starter-convex build",
+    "starter-app-convex:build": "pnpm --filter=starter-app-convex build",
+    "starter-app-trpc:build": "pnpm --filter=starter-app-trpc build",
+    "starter-app:build": "pnpm --filter=starter-app build",
+    "starter-app-convex:start": "pnpm --filter=starter-app-convex start",
+    "starter-app-trpc:start": "pnpm --filter=starter-app-trpc start",
+    "starter-app:start": "pnpm --filter=starter-app start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
@@ -15,7 +26,7 @@
     "turbo": "^2.5.5",
     "typescript": "5.7.3"
   },
-  "packageManager": "pnpm@10.18.3",
+  "packageManager": "pnpm@10.19.0",
   "engines": {
     "node": ">=20"
   }
