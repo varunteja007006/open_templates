@@ -31,6 +31,14 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "drizzle:push": {
+      "cache": false,
+      "interactive": true
+    },
+    "drizzle:studio": {
+      "cache": false,
+      "persistent": true
     }
   }
 }
