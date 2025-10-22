@@ -13,6 +13,7 @@
     "build:starter-convex": "pnpm --filter=starter-convex build",
     "build:starter-app-convex": "pnpm --filter=starter-app-convex build",
     "build:starter-app-trpc": "pnpm --filter=starter-app-trpc build",
+    "buildDeploy:starter-app-trpc": "turbo --filter=@workspace/starter-trpc-backend drizzle:push && pnpm --filter=starter-app-trpc build",
     "build:starter-app": "pnpm --filter=starter-app build",
     "start:starter-app-convex": "pnpm --filter=starter-app-convex start",
     "start:starter-app-trpc": "pnpm --filter=starter-app-trpc start",
