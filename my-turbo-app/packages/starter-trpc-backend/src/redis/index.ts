@@ -1,5 +1,8 @@
-import "dotenv/config";
 import Redis from "ioredis";
+import dotenv from "dotenv";
+dotenv.config({
+  path: "../../../.env"
+})
 
 const VALKEY_URL = process.env.VALKEY_URL;
 
