@@ -1,10 +1,11 @@
+import React from "react"
+
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
-
 import { auth } from "../auth";
 import { db, dbSchema, zodSchema } from "../db";
 
-export const trpcSessionContext = async (opts: {
+export const trpcSessionContext = React.cache(async (opts: {
   req: { headers: Headers };
 }) => {
   /**
@@ -25,7 +26,7 @@ export const trpcSessionContext = async (opts: {
     };
   }
   return { user };
-};
+});
 type Context = Awaited<ReturnType<typeof trpcSessionContext>>;
 
 // Avoid exporting the entire t-object

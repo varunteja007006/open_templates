@@ -4,11 +4,6 @@ import { Pool } from "pg";
 export { dbSchema } from "./schema";
 export { zodSchema } from "./zod-schema";
 
-import dotenv from "dotenv";
-dotenv.config({
-  path: "../../../.env"
-})
-
 const DATABASE_URL = process.env.DATABASE_URL;
 
 if (!DATABASE_URL) {

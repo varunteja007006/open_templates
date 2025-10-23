@@ -48,12 +48,12 @@ export function SignInForm() {
       {
         email,
         password,
-        callbackURL: "/dashboard",
+        callbackURL: "/",
         rememberMe: false,
       },
       {
         onRequest: () => setLoading(true),
-        onSuccess: () => router.push("/dashboard"),
+        onSuccess: () => router.push("/"),
         onError: (ctx) => setServerError(ctx.error.message),
       }
     );
