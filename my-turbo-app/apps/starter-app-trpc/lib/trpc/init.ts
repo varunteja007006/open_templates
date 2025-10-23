@@ -2,8 +2,8 @@ import React from "react"
 
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
-import { auth } from "../auth";
-import { db, dbSchema, zodSchema } from "../db";
+import { auth } from "@/lib/auth";
+import { db, dbSchema, zodSchema } from "@/lib/db";
 
 export const trpcSessionContext = React.cache(async (opts: {
   req: { headers: Headers };
