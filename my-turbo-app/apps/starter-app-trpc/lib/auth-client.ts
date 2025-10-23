@@ -3,9 +3,7 @@ import { createAuthClient } from "better-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export const authClient = createAuthClient({
-  baseURL: process.env.BETTER_AUTH_URL,
-});
+export const authClient = createAuthClient();
 
 export const useSession = authClient.useSession;
 
