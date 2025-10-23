@@ -12,7 +12,8 @@
     "drizzle:up": "pnpm drizzle-kit up",
     "drizzle:studio": "pnpm drizzle-kit studio",
     "dev": "pnpm tsx index.ts",
-    "build": "pnpm drizzle-kit push"
+    "build": "pnpm with-env drizzle-kit push",
+    "clean": "git clean -xdf .cache .turbo dist node_modules"
   },
   "exports": {
     ".": {

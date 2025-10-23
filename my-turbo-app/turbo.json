@@ -15,7 +15,10 @@
         "!.next/cache/**"
       ],
       "env": [
-        "BETTER_AUTH_URL"
+        "DATABASE_URL",
+        "BETTER_AUTH_SECRET",
+        "BETTER_AUTH_URL",
+        "VALKEY_URL"
       ]
     },
     "lint": {
@@ -39,6 +42,12 @@
     "drizzle:studio": {
       "cache": false,
       "persistent": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "//#clean": {
+      "cache": false
     }
   },
   "globalEnv": [
@@ -46,5 +55,9 @@
     "BETTER_AUTH_SECRET",
     "BETTER_AUTH_URL",
     "VALKEY_URL"
+  ],
+  "globalDependencies": [
+    ".env*",
+    "tsconfig.json"
   ]
 }

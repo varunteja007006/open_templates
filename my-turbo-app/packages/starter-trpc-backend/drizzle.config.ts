@@ -1,4 +1,11 @@
+import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
+
+const DATABASE_URL = process.env.DATABASE_URL
+
+if (!DATABASE_URL) {
+  throw new Error("URL not found")
+}
 
 export default defineConfig({
   out: "./drizzle",
@@ -6,7 +13,7 @@ export default defineConfig({
   schema: "./src/db/schema/*",
   
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    url: DATABASE_URL,
   },
 
   introspect: {
