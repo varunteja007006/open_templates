@@ -12,6 +12,7 @@ import {
 import CheckDBConnection from "./check-db";
 import { SignUp } from "./sign-up";
 import TrpcComponent from "./trpc-component";
+import { SendEmailBtn } from "@/components/organisms/email/send-email";
 
 export default function Page() {
   const sum = add(2, 3);
@@ -25,6 +26,7 @@ export default function Page() {
         <div className="flex items-center gap-3 justify-between">
           <Button size="sm">Button</Button>
           <ModeToggle />
+          <SendEmailBtn />
         </div>
       </div>
 
