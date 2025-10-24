@@ -11,6 +11,7 @@ import { SignInForm } from "@/components/organisms/sign-in-form";
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { GoogleLoginBtn } from "@/components/organisms/google-login-btn";
 
 export const SignUp = async () => {
   const session = await auth.api.getSession({
@@ -27,11 +28,13 @@ export const SignUp = async () => {
         <TabsContent value="sign-up">
           <div className="p-4">
             <SignUpForm />
+            <GoogleLoginBtn />
           </div>
         </TabsContent>
         <TabsContent value="sign-in">
           <div className="p-4">
             <SignInForm />
+            <GoogleLoginBtn />
           </div>
         </TabsContent>
       </Tabs>

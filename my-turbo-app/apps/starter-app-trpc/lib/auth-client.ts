@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { createAuthClient } from "better-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -26,11 +27,14 @@ export const useSignOut = (redirectURL = "/") => {
     });
 };
 
-export const useSignInSocial = () => {
+export const useSignInSocial = (
+  provider: "google" | "github",
+  callbackURL = "/"
+) => {
   return async () => {
     await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/dashboard",
+      provider,
+      callbackURL,
       fetchOptions: {
         onError: () => {
           toast.error("Something went wrong, cannot login!!");
@@ -39,5 +43,3 @@ export const useSignInSocial = () => {
     });
   };
 };
-
-export const useSignUpEmail = authClient.signUp.email
