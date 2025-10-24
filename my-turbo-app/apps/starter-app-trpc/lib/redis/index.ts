@@ -20,4 +20,20 @@ valkeyClient.on("error", (err) => {
   console.error("Valkey Client Error:", err);
 });
 
-export { valkeyClient };
+async function getItem(key: string) {
+  return await valkeyClient.get(key);
+}
+
+async function setItem(key: string, value: string, ttl?: number) {
+  if (ttl) {
+    return await valkeyClient.setex(key, ttl, value);
+  }
+  return await valkeyClient.set(key, value);
+}
+
+async function deleteItem(key: string) {
+  const res = await valkeyClient.del(key);
+  return res === 1 ? "true" : "false";
+}
+
+export { valkeyClient, getItem, setItem, deleteItem };

@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   Tabs,
   TabsContent,
@@ -13,6 +15,17 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { GoogleLoginBtn } from "@/components/organisms/google-login-btn";
 
+const LoginFormWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="space-y-6 p-2">
+      {children}
+      <div className="flex flex-row flex-wrap justify-center items-center gap-4">
+        <GoogleLoginBtn />
+      </div>
+    </div>
+  );
+};
+
 export const SignUp = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -26,16 +39,14 @@ export const SignUp = async () => {
           <TabsTrigger value="sign-in">Sign In</TabsTrigger>
         </TabsList>
         <TabsContent value="sign-up">
-          <div className="p-4">
+          <LoginFormWrapper>
             <SignUpForm />
-            <GoogleLoginBtn />
-          </div>
+          </LoginFormWrapper>
         </TabsContent>
         <TabsContent value="sign-in">
-          <div className="p-4">
+          <LoginFormWrapper>
             <SignInForm />
-            <GoogleLoginBtn />
-          </div>
+          </LoginFormWrapper>
         </TabsContent>
       </Tabs>
     );

@@ -17,8 +17,8 @@ export default function Page() {
   const sum = add(2, 3);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
-      <div className="p-10 space-y-6 min-h-[250px]">
+    <div className="flex flex-row items-center justify-start min-h-svh p-10">
+      <div className="p-10 space-y-6 max-w-xl">
         <h1 className="text-2xl text-center font-bold">Hello World</h1>
         <p>Starter Package Result: {sum}</p>
 
@@ -28,8 +28,8 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="min-h-[400px]">
-        <Tabs defaultValue="db" className="w-2xl">
+      <div className="flex-1">
+        <Tabs defaultValue="db" className="w-2xl mx-auto">
           <TabsList>
             <TabsTrigger value="db">Database - Drizzle & Postgres</TabsTrigger>
             <TabsTrigger value="better-auth">Better Auth</TabsTrigger>
