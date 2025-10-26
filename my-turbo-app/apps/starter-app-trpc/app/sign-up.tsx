@@ -14,6 +14,7 @@ import { SignInForm } from "@/components/organisms/sign-in-form";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { GoogleLoginBtn } from "@/components/organisms/google-login-btn";
+import PasswordResetTrigger from "@/components/organisms/password-reset-trigger";
 
 const LoginFormWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -22,6 +23,7 @@ const LoginFormWrapper = ({ children }: { children: React.ReactNode }) => {
       <div className="flex flex-row flex-wrap justify-center items-center gap-4">
         <GoogleLoginBtn />
       </div>
+      <PasswordResetTrigger email="test@test.com" />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { z } from "zod";
 
 import { Button } from "@workspace/ui/components/button";
 import { Input } from "@workspace/ui/components/input";
@@ -21,7 +21,7 @@ import { Loader2 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
@@ -54,7 +54,15 @@ export function SignInForm() {
       {
         onRequest: () => setLoading(true),
         onSuccess: () => router.push("/"),
-        onError: (ctx) => setServerError(ctx.error.message),
+        onError: (ctx) => {
+          if (ctx.error.status === 403) {
+            authClient.sendVerificationEmail({
+              email,
+              callbackURL: "/",
+            });
+          }
+          setServerError(ctx.error.message);
+        },
       }
     );
 

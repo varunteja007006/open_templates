@@ -10,13 +10,13 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "typecheck": "tsc --noEmit",
-    "drizzle:generate": "pnpm drizzle-kit generate",
-    "drizzle:migrate": "pnpm drizzle-kit migrate",
-    "drizzle:push": "pnpm drizzle-kit push",
-    "drizzle:pull": "pnpm drizzle-kit pull",
-    "drizzle:check": "pnpm drizzle-kit check",
-    "drizzle:up": "pnpm drizzle-kit up",
-    "drizzle:studio": "pnpm drizzle-kit studio"
+    "dev:generate": "pnpm drizzle-kit generate",
+    "dev:migrate": "pnpm drizzle-kit migrate",
+    "dev:push": "pnpm drizzle-kit push",
+    "dev:pull": "pnpm drizzle-kit pull",
+    "dev:check": "pnpm drizzle-kit check",
+    "dev:up": "pnpm drizzle-kit up",
+    "dev:studio": "pnpm drizzle-kit studio"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
