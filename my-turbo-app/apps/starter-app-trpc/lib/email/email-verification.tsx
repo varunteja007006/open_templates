@@ -13,7 +13,9 @@ export function EmailVerificationTemplate({
         Welcome User, Please verify your email, click this link to verify -{" "}
         {url}
       </h1>
-      <a target="_blank" href={url}>Verify</a>
+      <a target="_blank" href={url}>
+        Verify
+      </a>
     </div>
   );
 }

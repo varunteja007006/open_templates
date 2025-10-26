@@ -63,7 +63,7 @@ export function SignInForm() {
           }
           setServerError(ctx.error.message);
         },
-      }
+      },
     );
 
     setLoading(false);

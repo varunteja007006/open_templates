@@ -65,7 +65,7 @@ export function SignUpForm() {
           setServerError(ctx.error.message);
           toast.error(ctx.error.message ?? "Something went wrong!!");
         },
-      }
+      },
     );
 
     setLoading(false);

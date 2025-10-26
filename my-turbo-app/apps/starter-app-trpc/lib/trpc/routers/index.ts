@@ -21,7 +21,7 @@ export const appRouter = createTRPCRouter({
           .string()
           .min(4, "Minimum 4 chars")
           .max(15, "Maximum 15 chards"),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       return {
@@ -36,7 +36,7 @@ export const appRouter = createTRPCRouter({
           .string()
           .min(4, "Minimum 4 chars")
           .max(15, "Maximum 15 chards"),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       return {

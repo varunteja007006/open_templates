@@ -21,20 +21,22 @@ export default function TrpcComponent() {
     trpc.createHello.mutationOptions({
       onSuccess: (res) => toast.success(res.message),
       onError: (err) => toast.success(err.message),
-    })
+    }),
   );
 
   const createHelloUser = useMutation(
     trpc.createHelloUser.mutationOptions({
       onSuccess: (res) => toast.success(res.message),
       onError: (err) => toast.success(err.message),
-    })
+    }),
   );
 
   return (
     <div className="space-y-4">
       <div className="space-y-2 bg-card shadow border p-4 rounded-lg">
-        <h5 className="text-base font-semibold">Un-Authenticated TRPC API Testing</h5>
+        <h5 className="text-base font-semibold">
+          Un-Authenticated TRPC API Testing
+        </h5>
         <div>{hello.data?.message}</div>
         <Input
           name="message"
@@ -53,7 +55,9 @@ export default function TrpcComponent() {
         </Button>
       </div>
       <div className="space-y-2 bg-card shadow border p-4 rounded-lg">
-        <h5 className="text-base font-semibold">Authenticated TRPC API Testing</h5>
+        <h5 className="text-base font-semibold">
+          Authenticated TRPC API Testing
+        </h5>
         <div>{helloUser.data?.message}</div>
         <Input
           name="messageUser"

@@ -45,7 +45,7 @@ function getQueryClient() {
 export function TRPCAppProvider(
   props: Readonly<{
     children: React.ReactNode;
-  }>
+  }>,
 ) {
   const queryClient = getQueryClient();
   const [trpcClient] = React.useState(() =>
@@ -56,7 +56,7 @@ export function TRPCAppProvider(
           transformer: superjson,
         }),
       ],
-    })
+    }),
   );
 
   return (

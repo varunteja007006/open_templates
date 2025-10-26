@@ -8,29 +8,29 @@ import { toast } from "sonner";
 const appURL = process.env.NEXT_PUBLIC_APP_URL;
 
 export default function PasswordResetTrigger({
-	email,
+  email,
 }: Readonly<{ email: string }>) {
-	const resetPassword = async () => {
-		await authClient.requestPasswordReset(
-			{
-				email: email, // required
-				redirectTo: `/reset-password`,
-			},
-			{
-				onSuccess: () => {
-					toast.success("Email sent with password reset link.");
-				},
-				onError: (ctx) => {
-					console.error(ctx.error);
-					toast.error(ctx.error.message);
-				},
-			}
-		);
-	};
+  const resetPassword = async () => {
+    await authClient.requestPasswordReset(
+      {
+        email: email, // required
+        redirectTo: `/reset-password`,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Email sent with password reset link.");
+        },
+        onError: (ctx) => {
+          console.error(ctx.error);
+          toast.error(ctx.error.message);
+        },
+      },
+    );
+  };
 
-	return (
-		<Button variant={"outline"} onClick={resetPassword}>
-			Reset Password
-		</Button>
-	);
+  return (
+    <Button variant={"outline"} onClick={resetPassword}>
+      Reset Password
+    </Button>
+  );
 }

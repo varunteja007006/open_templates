@@ -1,32 +1,32 @@
-import React from "react"
+import React from "react";
 
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { auth } from "@/lib/auth";
 import { db, dbSchema, zodSchema } from "@/lib/db";
 
-export const trpcSessionContext = React.cache(async (opts: {
-  req: { headers: Headers };
-}) => {
-  /**
-   * @see: https://trpc.io/docs/server/context
-   */
-  const authSession = await auth.api.getSession({
-    headers: opts.req.headers,
-  });
+export const trpcSessionContext = React.cache(
+  async (opts: { req: { headers: Headers } }) => {
+    /**
+     * @see: https://trpc.io/docs/server/context
+     */
+    const authSession = await auth.api.getSession({
+      headers: opts.req.headers,
+    });
 
-  let user = null;
+    let user = null;
 
-  if (authSession?.user) {
-    user = {
-      id: authSession?.user.id,
-      name: authSession?.user.name,
-      email: authSession?.user.email,
-      emailVerified: authSession?.user.emailVerified,
-    };
-  }
-  return { user };
-});
+    if (authSession?.user) {
+      user = {
+        id: authSession?.user.id,
+        name: authSession?.user.name,
+        email: authSession?.user.email,
+        emailVerified: authSession?.user.emailVerified,
+      };
+    }
+    return { user };
+  },
+);
 type Context = Awaited<ReturnType<typeof trpcSessionContext>>;
 
 // Avoid exporting the entire t-object
