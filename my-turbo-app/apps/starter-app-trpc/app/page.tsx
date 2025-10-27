@@ -11,10 +11,9 @@ import {
 import CheckDBConnection from "./check-db";
 import { SignUp } from "./sign-up";
 import TrpcComponent from "./trpc-component";
-import { SendEmailBtn } from "@/components/organisms/email/send-email";
+import { SendEmailBtn } from "@/app/send-email";
 
 export default function Page() {
-
   return (
     <div className="flex flex-row items-center justify-start min-h-svh p-10">
       <div className="p-10 space-y-6 max-w-xl">

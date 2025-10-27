@@ -20,7 +20,9 @@ export default function TrpcComponent() {
   const createHello = useMutation(
     trpc.createHello.mutationOptions({
       onSuccess: (res) => toast.success(res.message),
-      onError: (err) => toast.success(err.message),
+      onError: (err) => {
+        toast.success(err.shape?.data.zodError?.fieldErrors.message ?? 'Something went wrong!!');
+      },
     }),
   );
 

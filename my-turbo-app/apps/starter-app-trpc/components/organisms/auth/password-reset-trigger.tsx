@@ -21,7 +21,6 @@ export default function PasswordResetTrigger({
           toast.success("Email sent with password reset link.");
         },
         onError: (ctx) => {
-          console.error(ctx.error);
           toast.error(ctx.error.message);
         },
       },

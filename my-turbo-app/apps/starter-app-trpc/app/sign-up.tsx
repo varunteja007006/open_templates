@@ -7,14 +7,14 @@ import {
   TabsTrigger,
 } from "@workspace/ui/components/tabs";
 
-import SignOutBtn from "@/components/organisms/sign-out-btn";
-import { SignUpForm } from "@/components/organisms/sign-up-form";
-import { SignInForm } from "@/components/organisms/sign-in-form";
+import SignOutBtn from "@/components/organisms/auth/sign-out-btn";
+import { SignUpForm } from "@/components/organisms/auth/sign-up-form";
+import { SignInForm } from "@/components/organisms/auth/sign-in-form";
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { GoogleLoginBtn } from "@/components/organisms/google-login-btn";
-import PasswordResetTrigger from "@/components/organisms/password-reset-trigger";
+import { GoogleLoginBtn } from "@/components/organisms/auth/google-login-btn";
+import PasswordResetTrigger from "@/components/organisms/auth/password-reset-trigger";
 
 const LoginFormWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
