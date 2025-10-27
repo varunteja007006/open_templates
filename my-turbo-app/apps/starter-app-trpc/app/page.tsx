@@ -1,5 +1,4 @@
 import { ModeToggle } from "@/components/mode-toggle";
-import { add } from "@workspace/starter-package";
 
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -15,13 +14,11 @@ import TrpcComponent from "./trpc-component";
 import { SendEmailBtn } from "@/components/organisms/email/send-email";
 
 export default function Page() {
-  const sum = add(2, 3);
 
   return (
     <div className="flex flex-row items-center justify-start min-h-svh p-10">
       <div className="p-10 space-y-6 max-w-xl">
         <h1 className="text-2xl text-center font-bold">Hello World</h1>
-        <p>Starter Package Result: {sum}</p>
 
         <div className="flex items-center gap-3 justify-between">
           <Button size="sm">Button</Button>
