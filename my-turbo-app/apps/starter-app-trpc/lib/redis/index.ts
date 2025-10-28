@@ -1,7 +1,7 @@
 import Redis from "ioredis";
 
 const VALKEY_URL = process.env.VALKEY_URL;
-
+const isDevEnv = process.env.NEXT_PUBLIC_ENV === "dev";
 // Type definition for the client we will export
 export type ValkeyClient = Redis;
 
@@ -21,10 +21,16 @@ valkeyClient.on("error", (err) => {
 });
 
 async function getItem(key: string) {
+  if (isDevEnv) {
+    console.log(`----- Hitting cache for ${key} -------`);
+  }
   return await valkeyClient.get(key);
 }
 
 async function setItem(key: string, value: string, ttl?: number) {
+  if (isDevEnv) {
+    console.log(`----- Setting cache for ${key} -------`);
+  }
   if (ttl) {
     return await valkeyClient.setex(key, ttl, value);
   }
@@ -32,6 +38,9 @@ async function setItem(key: string, value: string, ttl?: number) {
 }
 
 async function deleteItem(key: string) {
+  if (isDevEnv) {
+    console.log(`----- Deleting cache for ${key} -------`);
+  }
   const res = await valkeyClient.del(key);
   return res === 1 ? "true" : "false";
 }
