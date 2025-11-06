@@ -141,6 +141,28 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
 
+  apps/next-trpc/backend:
+    dependencies:
+      '@trpc/server':
+        specifier: ^11.6.0
+        version: 11.6.0(typescript@5.9.3)
+      cors:
+        specifier: ^2.8.5
+        version: 2.8.5
+      tsx:
+        specifier: ^4.20.6
+        version: 4.20.6
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
+    devDependencies:
+      '@types/cors':
+        specifier: ^2.8.19
+        version: 2.8.19
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   apps/starter-app:
     dependencies:
       '@workspace/starter-package':
@@ -3412,6 +3434,11 @@ packages:
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
+  fsevents@2.3.3:
+    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
@@ -4970,6 +4997,11 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  tsx@4.20.6:
+    resolution: {integrity: sha512-ytQKuwgmrrkDTFP4LjR0ToE2nqgy886GpvRSpU0JAnrdBYppuY5rLkRUYPU1yCryb24SsKBTL/hlDQAEFVwtZg==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   tsyringe@4.10.0:
     resolution: {integrity: sha512-axr3IdNuVIxnaK5XGEUFTu3YmAQ6lllgrvqfEoR16g/HGnYY/6We4oWENtAnzK6/LpJ2ur9PAb80RBt7/U4ugw==}
@@ -6819,6 +6851,10 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
+  '@trpc/server@11.6.0(typescript@5.9.3)':
+    dependencies:
+      typescript: 5.9.3
+
   '@trpc/tanstack-react-query@11.6.0(@tanstack/react-query@5.90.5(react@19.1.1))(@trpc/client@11.6.0(@trpc/server@11.6.0(typescript@5.9.2))(typescript@5.9.2))(@trpc/server@11.6.0(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)':
     dependencies:
       '@tanstack/react-query': 5.90.5(react@19.1.1)
@@ -6872,7 +6908,7 @@ snapshots:
 
   '@types/cors@2.8.19':
     dependencies:
-      '@types/node': 20.19.9
+      '@types/node': 22.18.12
 
   '@types/d3-array@3.2.2': {}
 
@@ -8109,6 +8145,9 @@ snapshots:
       universalify: 2.0.1
 
   fs.realpath@1.0.0: {}
+
+  fsevents@2.3.3:
+    optional: true
 
   function-bind@1.1.2: {}
 
@@ -9815,6 +9854,13 @@ snapshots:
   tslib@1.14.1: {}
 
   tslib@2.8.1: {}
+
+  tsx@4.20.6:
+    dependencies:
+      esbuild: 0.25.11
+      get-tsconfig: 4.12.0
+    optionalDependencies:
+      fsevents: 2.3.3
 
   tsyringe@4.10.0:
     dependencies:
