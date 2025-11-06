@@ -31,13 +31,15 @@ function getQueryClient() {
 	}
 }
 
-export function ReactQueryTRPCProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+export function ReactQueryTRPCProvider({
+	children,
+}: Readonly<{ children: React.ReactNode }>) {
 	const queryClient = getQueryClient();
 	const [trpcClient] = React.useState(() =>
 		createTRPCClient<AppRouter>({
 			links: [
 				httpBatchLink({
-					url: "http://localhost:4000",
+					url: `${process.env.NEXT_PUBLIC_BACKEND_URI}`,
 				}),
 			],
 		})
