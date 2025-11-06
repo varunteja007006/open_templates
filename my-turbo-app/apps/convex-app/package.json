@@ -5,7 +5,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "npx convex deploy && next build",
+    "build": "next build",
+    "dev:build": "npx convex deploy && next build",
+    "backend": "convex dev",
+    "backend:build": "convex deploy",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
