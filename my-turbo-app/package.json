@@ -10,12 +10,15 @@
     "dev:starter-app-trpc": "turbo dev --filter=starter-app-trpc",
     "dev:starter-app": "turbo dev --filter=starter-app",
     "dev:convex-app": "turbo dev --filter=convex-app",
+    "dev:starter-convex": "turbo dev --filter=starter-convex",
     "build:starter-app-trpc": "turbo build --filter=starter-app-trpc",
     "build:starter-app": "turbo build --filter=starter-app",
     "build:convex-app": "turbo build --filter=convex-app",
+    "build:starter-convex": "turbo build --filter=starter-convex",
     "start:starter-app-trpc": "pnpm --filter=starter-app-trpc start",
     "start:starter-app": "pnpm --filter=starter-app start",
-    "start:convex-app": "pnpm --filter=convex-app start"
+    "start:convex-app": "pnpm --filter=convex-app start",
+    "start:starter-convex": "pnpm --filter=starter-app start"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",

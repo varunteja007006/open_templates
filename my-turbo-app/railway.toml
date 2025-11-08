@@ -1,0 +1,13 @@
+[build]
+builder = "nixpacks"
+buildCommand = "cd ../../packages/convex-backend && npx convex deploy --cmd 'cd ../../apps/starter-convex && turbo run build' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL"
+
+[deploy]
+startCommand = "pnpm start:starter-convex"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "never"
+
+
+
+--

@@ -4,7 +4,9 @@ import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ConvexClientProvider } from "@/lib/convex-provider";
 
-export function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
+export function Providers({
+	children,
+}: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<NextThemesProvider
 			attribute="class"
