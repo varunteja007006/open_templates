@@ -9,8 +9,13 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "dev:starter-app-trpc": "turbo dev --filter=starter-app-trpc",
     "dev:starter-app": "turbo dev --filter=starter-app",
-    "dev:next-trpc": "turbo dev --filter=next-trpc",
-    "dev:convex-app": "turbo dev --filter=convex-app"
+    "dev:convex-app": "turbo dev --filter=convex-app",
+    "build:starter-app-trpc": "turbo build --filter=starter-app-trpc",
+    "build:starter-app": "turbo build --filter=starter-app",
+    "build:convex-app": "turbo build --filter=convex-app",
+    "start:starter-app-trpc": "pnpm --filter=starter-app-trpc start",
+    "start:starter-app": "pnpm --filter=starter-app start",
+    "start:convex-app": "pnpm --filter=convex-app start"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
@@ -19,7 +24,7 @@
     "turbo": "^2.6.0",
     "typescript": "5.7.3"
   },
-  "packageManager": "pnpm@10.19.0",
+  "packageManager": "pnpm@10.20.0",
   "engines": {
     "node": ">=20"
   },
