@@ -1,0 +1,269 @@
+2025-11-08T16:32:16.393436073Z [inf]  
+2025-11-08T16:32:20.503255040Z [inf]  [35m[Region: asia-southeast1][0m
+2025-11-08T16:32:20.588649515Z [inf]  
+2025-11-08T16:32:20.588689540Z [inf]  [38;2;125;86;243m╭─────────────────╮[0m
+2025-11-08T16:32:20.588694031Z [inf]  [38;2;125;86;243m│[0m Railpack 0.10.0 [38;2;125;86;243m│[0m
+2025-11-08T16:32:20.588697263Z [inf]  [38;2;125;86;243m╰─────────────────╯[0m
+2025-11-08T16:32:20.588702358Z [inf]  
+2025-11-08T16:32:20.588705870Z [inf]  [97m↳ Detected Node[0m
+2025-11-08T16:32:20.588709708Z [inf]  [97m↳ Using pnpm package manager[0m
+2025-11-08T16:32:20.588713017Z [inf]  [97m↳ Found workspace with 10 packages[0m
+2025-11-08T16:32:20.588715808Z [inf]  [97m↳ Installing pnpm@10.20.0 with Corepack[0m
+2025-11-08T16:32:20.588719278Z [inf]  
+2025-11-08T16:32:20.588722245Z [inf]  [1mPackages[0m
+2025-11-08T16:32:20.588725100Z [inf]  [38;5;238m──────────[0m
+2025-11-08T16:32:20.588728084Z [inf]  [95mnode[0m  [38;5;238m│[0m  [96m20.19.5[0m  [38;5;238m│[0m  package.json > engines > node (>=20)
+2025-11-08T16:32:20.588730960Z [inf]  [95mpnpm[0m  [38;5;238m│[0m  [96m10.20.0[0m  [38;5;238m│[0m  package.json > packageManager (10.20.0)
+2025-11-08T16:32:20.588734145Z [inf]  
+2025-11-08T16:32:20.588737007Z [inf]  [1mSteps[0m
+2025-11-08T16:32:20.588739820Z [inf]  [38;5;238m──────────[0m
+2025-11-08T16:32:20.588745967Z [inf]  [95m▸ install[0m
+2025-11-08T16:32:20.588748735Z [inf]  [38;5;245m$[0m [1mnpm i -g corepack@latest && corepack enable && corepack prepare --activate[0m
+2025-11-08T16:32:20.588751626Z [inf]  [38;5;245m$[0m [1mpnpm install --frozen-lockfile --prefer-offline[0m
+2025-11-08T16:32:20.588754475Z [inf]  
+2025-11-08T16:32:20.588757310Z [inf]  [95m▸ build[0m
+2025-11-08T16:32:20.588759945Z [inf]  [38;5;245m$[0m [1mcd packages/convex-backend && npx convex deploy --cmd 'cd ../../ && pnpm build:starter-convex' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL[0m
+2025-11-08T16:32:20.588763445Z [inf]  
+2025-11-08T16:32:20.588766546Z [inf]  [1mDeploy[0m
+2025-11-08T16:32:20.588769706Z [inf]  [38;5;238m──────────[0m
+2025-11-08T16:32:20.588772655Z [inf]  [38;5;245m$[0m [1mpnpm start:starter-convex[0m
+2025-11-08T16:32:20.588776685Z [inf]  
+2025-11-08T16:32:20.588779925Z [inf]  
+2025-11-08T16:32:20.589978108Z [inf]  Successfully prepared Railpack plan for build
+2025-11-08T16:32:20.590065909Z [inf]  
+2025-11-08T16:32:20.590076434Z [inf]  
+2025-11-08T16:32:20.590642106Z [inf]  context: r78b-8zCr
+2025-11-08T16:32:20.750661761Z [inf]  [internal] load build definition from railpack-plan.json
+2025-11-08T16:32:20.750703646Z [inf]  [internal] load build definition from railpack-plan.json
+2025-11-08T16:32:20.750718666Z [inf]  [internal] load build definition from railpack-plan.json
+2025-11-08T16:32:20.750740520Z [inf]  [internal] load build definition from railpack-plan.json
+2025-11-08T16:32:20.760388510Z [inf]  [internal] load build definition from railpack-plan.json
+2025-11-08T16:32:20.761837224Z [inf]  resolve image config for docker-image://ghcr.io/railwayapp/railpack-frontend:v0.10.0
+2025-11-08T16:32:21.016804947Z [inf]  resolve image config for docker-image://ghcr.io/railwayapp/railpack-frontend:v0.10.0
+2025-11-08T16:32:21.016852147Z [inf]  docker-image://ghcr.io/railwayapp/railpack-frontend:v0.10.0@sha256:0a243902b3816689bd8b6db5f75d951d3bb3dd9421c6667b4b78692bceb70975
+2025-11-08T16:32:21.016959882Z [inf]  docker-image://ghcr.io/railwayapp/railpack-frontend:v0.10.0@sha256:0a243902b3816689bd8b6db5f75d951d3bb3dd9421c6667b4b78692bceb70975
+2025-11-08T16:32:21.021924458Z [inf]  docker-image://ghcr.io/railwayapp/railpack-frontend:v0.10.0@sha256:0a243902b3816689bd8b6db5f75d951d3bb3dd9421c6667b4b78692bceb70975
+2025-11-08T16:32:21.022228646Z [inf]  docker-image://ghcr.io/railwayapp/railpack-frontend:v0.10.0@sha256:0a243902b3816689bd8b6db5f75d951d3bb3dd9421c6667b4b78692bceb70975
+2025-11-08T16:32:21.109727010Z [inf]  load build definition from railpack-plan.json
+2025-11-08T16:32:21.109793127Z [inf]  load build definition from railpack-plan.json
+2025-11-08T16:32:21.110024043Z [inf]  load build definition from railpack-plan.json
+2025-11-08T16:32:21.118263629Z [inf]  load build definition from railpack-plan.json
+2025-11-08T16:32:21.536912897Z [inf]  copy package.json
+2025-11-08T16:32:21.536947822Z [inf]  loading .
+2025-11-08T16:32:21.536956192Z [inf]  copy /root/.local/state/mise
+2025-11-08T16:32:21.536964336Z [inf]  copy /etc/mise/config.toml
+2025-11-08T16:32:21.536973723Z [inf]  copy /usr/local/bin/mise
+2025-11-08T16:32:21.536980941Z [inf]  docker-image://ghcr.io/railwayapp/railpack-runtime:latest
+2025-11-08T16:32:21.536986616Z [inf]  copy /mise/shims
+2025-11-08T16:32:21.536992715Z [inf]  install mise packages: node
+2025-11-08T16:32:21.536999771Z [inf]  create mise config
+2025-11-08T16:32:21.537004952Z [inf]  mkdir /etc/mise
+2025-11-08T16:32:21.537010061Z [inf]  docker-image://ghcr.io/railwayapp/railpack-builder:latest
+2025-11-08T16:32:21.537017409Z [inf]  npm i -g corepack@latest && corepack enable && corepack prepare --activate
+2025-11-08T16:32:21.537022912Z [inf]  copy /mise/installs
+2025-11-08T16:32:21.537075153Z [inf]  copy packages/ui/package.json
+2025-11-08T16:32:21.537081830Z [inf]  copy packages/typescript-config/package.json
+2025-11-08T16:32:21.537087812Z [inf]  copy packages/theme/package.json
+2025-11-08T16:32:21.537093187Z [inf]  copy packages/convex-backend/package.json
+2025-11-08T16:32:21.537099012Z [inf]  copy packages/eslint-config/package.json
+2025-11-08T16:32:21.537105835Z [inf]  copy pnpm-lock.yaml
+2025-11-08T16:32:21.537114873Z [inf]  pnpm install --frozen-lockfile --prefer-offline
+2025-11-08T16:32:21.537120802Z [inf]  copy apps/starter-app-trpc/package.json
+2025-11-08T16:32:21.537126166Z [inf]  copy apps/starter-app/package.json
+2025-11-08T16:32:21.537131347Z [inf]  copy apps/convex-app/package.json
+2025-11-08T16:32:21.537136487Z [inf]  copy package.json
+2025-11-08T16:32:21.537141650Z [inf]  copy pnpm-workspace.yaml
+2025-11-08T16:32:21.537146735Z [inf]  copy .npmrc
+2025-11-08T16:32:21.537151920Z [inf]  copy apps/starter-convex/package.json
+2025-11-08T16:32:21.537157335Z [inf]  mkdir -p /app/node_modules/.cache
+2025-11-08T16:32:21.537165704Z [inf]  copy packages/starter-package/package.json
+2025-11-08T16:32:21.537185262Z [inf]  cd packages/convex-backend && npx convex deploy --cmd 'cd ../../ && pnpm build:starter-convex' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL
+2025-11-08T16:32:21.537190641Z [inf]  [railpack] secrets hash
+2025-11-08T16:32:21.537195895Z [inf]  copy .
+2025-11-08T16:32:21.537208185Z [inf]  copy / /app
+2025-11-08T16:32:21.537226230Z [inf]  copy /app
+2025-11-08T16:32:21.537231752Z [inf]  copy /opt/corepack
+2025-11-08T16:32:21.537237060Z [inf]  copy /app
+2025-11-08T16:32:21.537242086Z [inf]  copy /root/.cache
+2025-11-08T16:32:21.537247378Z [inf]  copy /app/node_modules
+2025-11-08T16:32:21.537292446Z [inf]  docker-image://ghcr.io/railwayapp/railpack-builder:latest
+2025-11-08T16:32:21.537299560Z [inf]  [railpack] secrets hash
+2025-11-08T16:32:21.537322154Z [inf]  docker-image://ghcr.io/railwayapp/railpack-runtime:latest
+2025-11-08T16:32:21.537421397Z [inf]  loading .
+2025-11-08T16:32:21.807728043Z [inf]  docker-image://ghcr.io/railwayapp/railpack-runtime:latest
+2025-11-08T16:32:21.813840940Z [inf]  docker-image://ghcr.io/railwayapp/railpack-builder:latest
+2025-11-08T16:32:21.814576356Z [inf]  mkdir /etc/mise
+2025-11-08T16:32:21.814608183Z [inf]  loading .
+2025-11-08T16:32:21.814616103Z [inf]  [railpack] secrets hash
+2025-11-08T16:32:21.814630540Z [inf]  create mise config
+2025-11-08T16:32:21.830537006Z [inf]  [railpack] secrets hash
+2025-11-08T16:32:21.853117323Z [inf]  loading .
+2025-11-08T16:32:21.925136064Z [inf]  create mise config
+2025-11-08T16:32:21.926085085Z [inf]  install mise packages: node
+2025-11-08T16:32:22.111208592Z [inf]  mise node@20.19.5    install
+
+2025-11-08T16:32:22.112070772Z [inf]  mise node@20.19.5    download node-v20.19.5-linux-x64.tar.gz
+
+2025-11-08T16:32:22.47132009Z [inf]  mise node@20.19.5    extract node-v20.19.5-linux-x64.tar.gz
+
+2025-11-08T16:32:23.472877884Z [inf]  mise node@20.19.5    node -v
+
+2025-11-08T16:32:23.476177761Z [inf]  mise node@20.19.5    v20.19.5
+
+2025-11-08T16:32:23.477108124Z [inf]  mise node@20.19.5    npm -v
+
+2025-11-08T16:32:23.561730274Z [inf]  mise node@20.19.5    10.8.2
+
+2025-11-08T16:32:23.565942963Z [inf]  mise node@20.19.5    enable corepack shims
+
+2025-11-08T16:32:23.636717665Z [inf]  mise node@20.19.5  ✓ installed
+
+2025-11-08T16:32:23.662846732Z [inf]  install mise packages: node
+2025-11-08T16:32:23.663905375Z [inf]  copy package.json
+2025-11-08T16:32:23.703023949Z [inf]  copy package.json
+2025-11-08T16:32:23.703816002Z [inf]  npm i -g corepack@latest && corepack enable && corepack prepare --activate
+2025-11-08T16:32:23.944350848Z [inf]  npm warn config production Use `--omit=dev` instead.
+
+2025-11-08T16:32:24.425171949Z [inf]  copy /mise/shims
+2025-11-08T16:32:24.425219145Z [inf]  copy /mise/installs
+2025-11-08T16:32:24.754641524Z [inf]  
+changed 1 package in 834ms
+
+2025-11-08T16:32:24.761998444Z [inf]  Reshimming mise 20.19.5...
+
+2025-11-08T16:32:24.934445271Z [inf]  Preparing pnpm@10.20.0 for immediate activation...
+
+2025-11-08T16:32:25.097050536Z [inf]  copy /mise/installs
+2025-11-08T16:32:25.098947120Z [inf]  copy /usr/local/bin/mise
+2025-11-08T16:32:25.206340041Z [inf]  copy /usr/local/bin/mise
+2025-11-08T16:32:25.207811031Z [inf]  copy /etc/mise/config.toml
+2025-11-08T16:32:25.265018923Z [inf]  copy /etc/mise/config.toml
+2025-11-08T16:32:25.266169421Z [inf]  copy /root/.local/state/mise
+2025-11-08T16:32:25.285131433Z [inf]  copy /root/.local/state/mise
+2025-11-08T16:32:26.042126408Z [inf]  npm i -g corepack@latest && corepack enable && corepack prepare --activate
+2025-11-08T16:32:26.043191474Z [inf]  mkdir -p /app/node_modules/.cache
+2025-11-08T16:32:26.159489666Z [inf]  mkdir -p /app/node_modules/.cache
+2025-11-08T16:32:26.160297028Z [inf]  copy package.json
+2025-11-08T16:32:26.174152905Z [inf]  copy package.json
+2025-11-08T16:32:26.175376685Z [inf]  copy apps/convex-app/package.json
+2025-11-08T16:32:26.241244931Z [inf]  copy apps/convex-app/package.json
+2025-11-08T16:32:26.242678234Z [inf]  copy apps/starter-app/package.json
+2025-11-08T16:32:26.260528127Z [inf]  copy apps/starter-app/package.json
+2025-11-08T16:32:26.261669773Z [inf]  copy apps/starter-app-trpc/package.json
+2025-11-08T16:32:26.278167276Z [inf]  copy apps/starter-app-trpc/package.json
+2025-11-08T16:32:26.279761881Z [inf]  copy apps/starter-convex/package.json
+2025-11-08T16:32:26.291089621Z [inf]  copy apps/starter-convex/package.json
+2025-11-08T16:32:26.292180741Z [inf]  copy packages/convex-backend/package.json
+2025-11-08T16:32:26.303385643Z [inf]  copy packages/convex-backend/package.json
+2025-11-08T16:32:26.304239532Z [inf]  copy packages/eslint-config/package.json
+2025-11-08T16:32:26.320856717Z [inf]  copy packages/eslint-config/package.json
+2025-11-08T16:32:26.321654994Z [inf]  copy packages/starter-package/package.json
+2025-11-08T16:32:26.333790350Z [inf]  copy packages/starter-package/package.json
+2025-11-08T16:32:26.334876426Z [inf]  copy packages/theme/package.json
+2025-11-08T16:32:26.347375246Z [inf]  copy packages/theme/package.json
+2025-11-08T16:32:26.348307842Z [inf]  copy packages/typescript-config/package.json
+2025-11-08T16:32:26.360413678Z [inf]  copy packages/typescript-config/package.json
+2025-11-08T16:32:26.361607743Z [inf]  copy packages/ui/package.json
+2025-11-08T16:32:26.373654865Z [inf]  copy packages/ui/package.json
+2025-11-08T16:32:26.374391622Z [inf]  copy pnpm-workspace.yaml
+2025-11-08T16:32:26.385778545Z [inf]  copy pnpm-workspace.yaml
+2025-11-08T16:32:26.386643175Z [inf]  copy pnpm-lock.yaml
+2025-11-08T16:32:26.399942528Z [inf]  copy pnpm-lock.yaml
+2025-11-08T16:32:26.400834530Z [inf]  copy .npmrc
+2025-11-08T16:32:26.414236963Z [inf]  copy .npmrc
+2025-11-08T16:32:26.415115978Z [inf]  pnpm install --frozen-lockfile --prefer-offline
+2025-11-08T16:32:26.940090843Z [inf]  Scope: all 11 workspace projects
+
+2025-11-08T16:32:27.006016106Z [inf]  Lockfile is up to date, resolution step is skipped
+
+2025-11-08T16:32:27.081183828Z [inf]  Progress: resolved 1, reused 0, downloaded 0, added 0
+
+2025-11-08T16:32:27.18969659Z [inf]  Packages: +853
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+2025-11-08T16:32:28.081599157Z [inf]  Progress: resolved 853, reused 0, downloaded 91, added 83
+
+2025-11-08T16:32:29.081175521Z [inf]  Progress: resolved 853, reused 0, downloaded 535, added 535
+
+2025-11-08T16:32:30.097141697Z [inf]  Progress: resolved 853, reused 0, downloaded 841, added 814
+
+2025-11-08T16:32:31.101692527Z [inf]  Progress: resolved 853, reused 0, downloaded 852, added 851
+
+2025-11-08T16:32:31.548491159Z [inf]  Progress: resolved 853, reused 0, downloaded 853, added 853, done
+
+2025-11-08T16:32:32.04353536Z [inf]  
+dependencies:
++ dotenv-cli 11.0.0
+
+devDependencies:
++ @workspace/eslint-config 0.0.0 <- packages/eslint-config
++ @workspace/typescript-config 0.0.0 <- packages/typescript-config
++ prettier 3.6.2
++ turbo 2.6.0
++ typescript 5.7.3
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: @tailwindcss/oxide, better-sqlite3, core-js-pure,   │
+│   esbuild, sharp.                                                            │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+2025-11-08T16:32:32.315637847Z [inf]  Done in 5.7s using pnpm v10.20.0
+
+2025-11-08T16:32:32.948535024Z [inf]  pnpm install --frozen-lockfile --prefer-offline
+2025-11-08T16:32:32.949232947Z [inf]  copy / /app
+2025-11-08T16:32:33.472040894Z [inf]  copy / /app
+2025-11-08T16:32:33.473250599Z [inf]  copy .
+2025-11-08T16:32:33.510265801Z [inf]  copy .
+2025-11-08T16:32:33.511736004Z [inf]  cd packages/convex-backend && npx convex deploy --cmd 'cd ../../ && pnpm build:starter-convex' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL
+2025-11-08T16:32:33.745698691Z [inf]  npm warn config production Use `--omit=dev` instead.
+
+2025-11-08T16:32:36.485919718Z [inf]  - Running 'cd' with environment variable "CONVEX_URL" set...
+
+
+2025-11-08T16:32:37.525757197Z [inf]  ✔ Ran "cd" with environment variable "CONVEX_URL" set
+
+2025-11-08T16:32:37.526365653Z [inf]  - Deploying to https://glorious-newt-680.convex.cloud...
+
+
+2025-11-08T16:32:40.521475488Z [inf]  ✔ Deployed Convex functions to https://glorious-newt-680.convex.cloud
+
+2025-11-08T16:32:40.948816028Z [inf]  cd packages/convex-backend && npx convex deploy --cmd 'cd ../../ && pnpm build:starter-convex' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL
+2025-11-08T16:32:48.275187801Z [inf]  copy /app/node_modules
+2025-11-08T16:32:53.160453459Z [inf]  copy /app/node_modules
+2025-11-08T16:32:53.161697270Z [inf]  copy /root/.cache
+2025-11-08T16:32:53.496838390Z [inf]  copy /root/.cache
+2025-11-08T16:32:53.499576530Z [inf]  copy /app
+2025-11-08T16:32:54.608020635Z [inf]  copy /app
+2025-11-08T16:32:54.609976981Z [inf]  copy /opt/corepack
+2025-11-08T16:32:54.731402766Z [inf]  copy /opt/corepack
+2025-11-08T16:32:54.733005219Z [inf]  copy /app
+2025-11-08T16:33:00.974391166Z [inf]  copy /app
+2025-11-08T16:33:10.121581158Z [inf]  [auth] sharing credentials for production-asia-southeast1-eqsg3a.railway-registry.com
+2025-11-08T16:33:10.121633573Z [inf]  [auth] sharing credentials for production-asia-southeast1-eqsg3a.railway-registry.com
+2025-11-08T16:33:11.901509049Z [inf]  importing to docker
+2025-11-08T16:33:27.869484317Z [inf]  importing to docker
+2025-11-08T16:33:49.443929420Z [inf]  [92mBuild time: 88.85 seconds[0m
+2025-11-08T16:34:34.886105600Z [inf]  
+2025-11-08T16:34:34.886239109Z [inf]  [35m====================
+Starting Healthcheck
+====================
+[0m
+2025-11-08T16:34:34.886244117Z [inf]  [37mPath: /[0m
+2025-11-08T16:34:34.886246986Z [inf]  [37mRetry window: 1m40s[0m
+2025-11-08T16:34:34.886249157Z [inf]  
+2025-11-08T16:34:35.715933848Z [inf]  [93mAttempt #1 failed with service unavailable. Continuing to retry for 1m39s[0m
+2025-11-08T16:34:36.977050168Z [inf]  [93mAttempt #2 failed with service unavailable. Continuing to retry for 1m38s[0m
+2025-11-08T16:34:39.175175071Z [inf]  [93mAttempt #3 failed with service unavailable. Continuing to retry for 1m36s[0m
+2025-11-08T16:34:43.365582020Z [inf]  [93mAttempt #4 failed with service unavailable. Continuing to retry for 1m31s[0m
+2025-11-08T16:34:51.552641500Z [inf]  [93mAttempt #5 failed with service unavailable. Continuing to retry for 1m23s[0m
+2025-11-08T16:35:07.770109179Z [inf]  [93mAttempt #6 failed with service unavailable. Continuing to retry for 1m7s[0m
+2025-11-08T16:35:37.965725105Z [inf]  [93mAttempt #7 failed with service unavailable. Continuing to retry for 37s[0m
+2025-11-08T16:36:08.178858378Z [inf]  [93mAttempt #8 failed with service unavailable. Continuing to retry for 7s[0m
+2025-11-08T16:36:08.253099915Z [inf]  
+2025-11-08T16:36:08.253156916Z [inf]  [91m1/1 replicas never became healthy![0m
+2025-11-08T16:36:08.253159882Z [inf]  [91mHealthcheck failed![0m

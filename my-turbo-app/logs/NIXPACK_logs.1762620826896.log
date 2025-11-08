@@ -1,0 +1,16 @@
+2025-11-08T15:42:27.000000000Z [inf]  Starting Container
+2025-11-08T15:42:28.267957908Z [inf]  
+2025-11-08T15:42:28.267966493Z [inf]  > my-turbo-app@0.0.1 start:starter-convex /app
+2025-11-08T15:42:28.267973323Z [inf]  > pnpm --filter=starter-convex start
+2025-11-08T15:42:28.267980532Z [inf]  
+2025-11-08T15:42:28.267987450Z [inf]  
+2025-11-08T15:42:28.267997007Z [inf]  > starter-convex@0.0.1 start /app/apps/starter-convex
+2025-11-08T15:42:28.268004575Z [inf]  > next start
+2025-11-08T15:42:28.268012650Z [inf]  
+2025-11-08T15:42:28.384956187Z [inf]     ▲ Next.js 15.4.5
+2025-11-08T15:42:28.384963022Z [inf]     - Local:        http://localhost:8080
+2025-11-08T15:42:28.384969165Z [inf]     - Network:      http://10.165.92.56:8080
+2025-11-08T15:42:28.384975232Z [inf]  
+2025-11-08T15:42:28.384981777Z [inf]   ✓ Starting...
+2025-11-08T15:42:28.596344892Z [inf]   ✓ Ready in 396ms
+2025-11-08T15:47:27.000000000Z [inf]  Stopping Container
