@@ -1,3 +1,5 @@
+"use client"
+
 import { ModeToggle } from "@/components/mode-toggle";
 
 import { Button } from "@workspace/ui/components/button";
