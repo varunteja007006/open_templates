@@ -18,7 +18,7 @@
     "start:starter-app-trpc": "pnpm --filter=starter-app-trpc start",
     "start:starter-app": "pnpm --filter=starter-app start",
     "start:convex-app": "pnpm --filter=convex-app start",
-    "start:starter-convex": "pnpm --filter=starter-app start"
+    "start:starter-convex": "pnpm --filter=starter-convex start"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
