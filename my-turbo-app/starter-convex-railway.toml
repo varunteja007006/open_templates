@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "cd packages/convex-backend && npx convex deploy --cmd 'cd ../../ && build:starter-convex' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL"
+buildCommand = "cd packages/convex-backend && npx convex deploy --cmd 'cd ../../ && pnpm build:starter-convex' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL"
 
 [deploy]
 startCommand = "pnpm start:starter-convex"
