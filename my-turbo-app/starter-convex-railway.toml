@@ -3,4 +3,6 @@ buildCommand = "cd packages/convex-backend && npx convex deploy --cmd 'cd ../../
 
 [deploy]
 startCommand = "pnpm start:starter-convex"
+healthcheckPath = "/"
+healthcheckTimeout = 100
 restartPolicyType = "never"
