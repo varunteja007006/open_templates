@@ -1,6 +1,6 @@
 [build]
 builder = "RAILPACK"
-buildCommand = "pnpm build:trpc-app && cd packages/trpc-backend && pnpm db:migrate && cd ../../"
+buildCommand = "pnpm build:trpc-app"
 
 [deploy]
 startCommand = "pnpm start:trpc-app"
