@@ -11,13 +11,13 @@
     "db:check": "pnpm drizzle-kit check",
     "db:up": "pnpm drizzle-kit up",
     "db:studio": "pnpm drizzle-kit studio",
-    "dev": "pnpm tsx index.ts",
-    "build": "pnpm drizzle-kit push"
+    "dev": "pnpm tsx --watch index.ts",
+    "build": "tsc"
   },
   "exports": {
     ".": {
       "types": "./index.ts",
-      "default": "./index.ts"
+      "default": "./dist/index.ts"
     }
   },
   "keywords": [],
