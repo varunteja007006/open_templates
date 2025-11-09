@@ -1,4 +1,4 @@
-import { db, dbSchema } from "@workspace/starter-trpc-backend";
+import { db, dbSchema } from "@workspace/trpc-backend";
 
 export default async function CheckDBConnection() {
   const res = await db.execute("select 'Hello World' as message");

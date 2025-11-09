@@ -9,8 +9,10 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "dev:starter-convex": "turbo dev --filter=starter-convex",
     "dev:starter-app-convex": "turbo dev --filter=starter-app-convex",
-    "dev:starter-app-trpc": "turbo dev --filter=starter-app-trpc",
-    "dev:starter-app": "turbo dev --filter=starter-app"
+    "dev:starter-app": "turbo dev --filter=starter-app",
+    "dev:trpc-app": "turbo dev --filter=trpc-app",
+    "build:trpc-app": "turbo build --filter=trpc-app",
+    "start:trpc-app": "pnpm --filter=trpc-app start"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
