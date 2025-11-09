@@ -1,9 +1,7 @@
 [build]
 builder = "RAILPACK"
-buildCommand = "cd packages/trpc-backend && npx convex deploy && cd ../../ && NEXT_PUBLIC_CONVEX_URL=$(npx convex url) pnpm build:starter-convex"
+buildCommand = "cd packages/trpc-backend && pnpm db:migrate && cd ../../ && pnpm build:trpc-app"
 
 [deploy]
-# Use the correct start command for your Next.js app
-startCommand = "pnpm start:starter-convex"
-# Change 'never' to 'on-failure' to allow the service to recover from crashes
-restartPolicyType = "on-failure"
+startCommand = "pnpm start:trpc-app"
+restartPolicyType = "never"
