@@ -1,1 +1,3 @@
-export { auth } from "@workspace/trpc-backend";
+import { auth } from "@workspace/trpc-backend";
+
+export { auth };
