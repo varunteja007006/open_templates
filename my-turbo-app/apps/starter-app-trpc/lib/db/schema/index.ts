@@ -1,8 +1,5 @@
-import { user, session, account, verification } from "./auth-schema";
+import * as authSchema from "./auth-schema";
 
 export const dbSchema = {
-  user,
-  session,
-  account,
-  verification,
+	...authSchema,
 };

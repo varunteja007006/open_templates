@@ -8,6 +8,13 @@
       "when": 1761237043084,
       "tag": "20251023163043_rainy_roland_deschain",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1763826130158,
+      "tag": "20251122154210_rainy_gargoyle",
+      "breakpoints": true
     }
   ]
 }
