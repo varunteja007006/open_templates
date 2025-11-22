@@ -11,12 +11,26 @@ import {
 	InputOTPSlot,
 } from "@workspace/ui/components/input-otp";
 
-import { sendOtp, verifyOtp } from "@/lib/auth-client";
+import { sendOtp, useSession, verifyOtp } from "@/lib/auth-client";
 import { toast } from "sonner";
+import SignOutBtn from "./sign-out-btn";
 
 export function OtpForm() {
 	const [code, setCode] = React.useState("");
 	const [phoneNumber, setPhoneNumber] = React.useState("");
+
+	const { data } = useSession();
+
+	if (data?.user) {
+		return (
+			<div className="p-4 text-left space-y-4">
+				<p className="text-2xl">Welcome, </p>
+				<p className="text-lg">{data.user.name}</p>
+				<SignOutBtn />
+			</div>
+		);
+	}
+
 	return (
 		<div className="space-y-4 my-4">
 			<Input
@@ -57,7 +71,6 @@ export function OtpForm() {
 						verifyOtp({
 							phoneNumber,
 							code,
-							updatePhoneNumber: true,
 						})
 							.then((res) => {
 								const { data, error } = res;
