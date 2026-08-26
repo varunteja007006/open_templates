@@ -16,6 +16,7 @@ public class HealthCheck {
         map.put("status", "UP");
         map.put("timestamp", new Date());
         map.put("message", "Java Backend with Gradle is running successfully! ✅");
+        map.put("new", "new updated message!!!");
         return map;
     }
 }
